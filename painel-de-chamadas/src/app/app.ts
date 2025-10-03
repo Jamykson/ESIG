@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 
-// Importamos apenas os componentes que são realmente necessários para a lógica ou template
-import { ClockComponent } from './components/clock/clock';
+// Importar todos os componentes filhos usados no template
 import { VideoPlayer } from './components/video-player/video-player';
 import { CallDisplay } from './components/call-display/call-display';
 import { CallHistory } from './components/call-history/call-history';
+import { ClockComponent } from './components/clock/clock';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     CommonModule,
-    ClockComponent,
     VideoPlayer,
     CallDisplay,
-    CallHistory
+    CallHistory,
+    ClockComponent
   ],
   providers: [DatePipe],
   templateUrl: './app.html',
@@ -29,6 +29,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentDate = this.datePipe.transform(new Date(), "EEEE, d 'de' MMMM", 'pt-BR');
+
+    // ATUALIZAÇÃO: Carrega 5 itens para ter 1 senha atual e 4 no histórico
+    const initialHistory = this.mockCalls.slice(0, 5); 
+    this.callHistory = initialHistory.reverse();
   }
   
   isCallActive = false;
@@ -37,7 +41,7 @@ export class AppComponent implements OnInit {
     { ticket: 'B002', name: 'Maria Joaquina de Souza', desk: 'Guichê 03' },
     { ticket: 'A003', name: 'Marcio Pablo Alves', desk: 'Guichê 02' },
     { ticket: 'C004', name: 'Ana Beatriz Oliveira', desk: 'Guichê 01' },
-    { ticket: 'B005', 'name': 'Lucas Cirilo Mendes', desk: 'Guichê 02' },
+    { ticket: 'B005', name: 'Lucas Cirilo Mendes', desk: 'Guichê 02' },
   ];
   currentCall: any = null;
   callHistory: any[] = [];

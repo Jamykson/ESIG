@@ -1,8 +1,17 @@
+<div class="panel-header">
+  <h3>CHAMADAS</h3>
+  <div class="panel-icons">
+    <span>🔊</span> <span>🔲</span> </div>
+</div>
+
 <div class="current-call-section" *ngIf="historyData.length > 0">
   <h4>SENHA ATUAL</h4>
-  <div class="current-call">
-    <span class="ticket">{{ historyData[0].ticket }}</span>
-    <span class="desk">{{ historyData[0].desk }}</span>
+  <div class="current-call-card">
+    <div class="ticket-info">
+      <div class="ticket">{{ historyData[0].ticket }}</div>
+      <div class="name">{{ historyData[0].name }}</div>
+    </div>
+    <div class="desk">{{ historyData[0].desk }}</div>
   </div>
 </div>
 
@@ -15,8 +24,8 @@
         <div class="name">{{ call.name }}</div>
       </div>
       <div class="desk-info">
-        <div class="desk">{{ call.desk }}</div>
-        <div class="time">10:19</div> </div>
+        <div class="time">17:13</div> <div class="desk">{{ call.desk }}</div>
+      </div>
     </li>
   </ul>
 </div>

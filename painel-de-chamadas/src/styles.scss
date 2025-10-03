@@ -1,1 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+/* Reset para remover margens padrão do navegador */
+body {
+  margin: 0;
+  font-family: sans-serif; /* É bom definir uma fonte padrão aqui também */
+}

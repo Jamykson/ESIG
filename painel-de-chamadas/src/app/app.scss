@@ -1,100 +1,116 @@
-/* --- Estilo do Cabeçalho Superior --- */
+/* ================================= 
+   ESTILOS GLOBAIS E LAYOUT PRINCIPAL
+   ================================= */
+
+:host {
+  display: block;
+  background-color: #f3f4f6;
+  font-family: sans-serif;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 60fr 40fr;
+  align-items: stretch;
+  padding: 80px 2rem 2rem 2rem;
+  gap: 2rem;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ================================= 
+   CABEÇALHO SUPERIOR
+   ================================= */
+/* ... (sem alterações aqui) ... */
 .app-header {
   background-color: #0a5750;
   color: white;
   width: 100%;
-  height: 60px;
+  height: 50px;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
-  
-  /* Novas regras para alinhar os conteúdos */
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Manda cada div para uma extremidade */
+  justify-content: space-between;
   padding: 0 2rem;
   box-sizing: border-box;
-  font-family: sans-serif;
 }
-
-/* Container para os itens da esquerda */
-.header-left {
+.header-left, .header-right {
   display: flex;
   align-items: center;
-  gap: 1rem; /* Espaçamento entre itens da esquerda, se houver mais */
+  gap: 1.5rem;
 }
-
-/* Container para os itens da direita */
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem; /* <-- AUMENTE OU DIMINUA ESTE VALOR */
-}
-
 .header-logo {
   height: 40px;
   width: auto;
 }
 
-/* --- Estilos do Conteúdo Principal --- */
+/* ================================= 
+   CONTEÚDO DO VÍDEO (LADO ESQUERDO)
+   ================================= */
 
-/* Remove margens e paddings padrão para ocupar a tela toda */
-:host {
-  display: block;
-  background-color: #E8EDF0; /* Cor de fundo cinza claro da imagem */
-  font-family: sans-serif;
-  padding-top: 60px; /* Adiciona um padding no topo para não ficar atrás do header */
-}
-
-/* Container principal que vai organizar as duas colunas */
-main {
-  display: grid; /* MUDAMOS PARA GRID */
-  grid-template-columns: 2fr 1fr; /* Divide a tela em 2 partes para a esquerda e 1 para a direita */
-  align-items: center; /* Centraliza os itens verticalmente */
-  padding: 2rem;
-  gap: 2rem;
-  height: calc(100vh - 60px); /* Ocupa a altura disponível */
-}
-
-
-/* Ajusta o contêiner do vídeo (a caixa azul interna) */
-.video-container-wrapper {
-  background-color: rgb(14, 26, 185);
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
-  width: 100%;
-  max-width: 900px;
-  max-height: 460px;
-  transform: translateY(-32px); /* <-- PROBLEMA ESTÁ AQUI */
-}
-
-/* Estilo para a nova moldura verde */
+/* CAMADA 1: A Moldura Externa (a maior de todas) */
 .green-frame {
-  background-color: green;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #FFFFFF; /* Cor base da moldura externa */
+  padding: 1rem; /* Espaçamento que define a "borda" branca */
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  width: 100%;
   justify-self: center;
   align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Garante que o container interno do vídeo tenha a proporção 16:9 */
-.video-container {
+/* CAMADA 2: O Container Interno (cinza claro) */
+.video-container-wrapper {
+  background-color: #f3f4f6; /* Cor cinza claro para a segunda camada */
+  border-radius: 8px;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  
+  /* Padding que cria a "borda" cinza claro em volta do vídeo */
+  padding: 1rem;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden; /* Garante que o vídeo não "vaze" */
 }
 
-/* Ajusta o painel de chamadas para ocupar o espaço da direita */
+/* CAMADA 3: O Player de Vídeo (a menor de todas) */
+.video-container {
+  width: 100%; /* Ocupa 100% do espaço dentro do container cinza */
+  aspect-ratio: 16 / 9;
+  position: relative;
+  border-radius: 6px; /* Adiciona bordas arredondadas ao próprio vídeo */
+  overflow: hidden; /* Garante que o conteúdo do YouTube respeite as bordas */
+}
+/* ================================= 
+   PAINEL DE CHAMADAS (LADO DIREITO)
+   ================================= */
+/* ... (sem alterações aqui) ... */
 .calls-panel-wrapper {
-  flex: 1; /* Ocupa 1/4 do espaço total (3 para o vídeo, 1 para o painel) */
+  background-color: #FFFFFF;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  align-self: center;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 1.5rem;
 }
 
-/* --- Outros Estilos (Botão, etc.) --- */
-
+/* ================================= 
+   OUTROS
+   ================================= */
+/* ... (sem alterações aqui) ... */
 .simulation-button {
   position: fixed;
   bottom: 20px;
