@@ -1,0 +1,85 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Espaço entre a "SENHA ATUAL" e o "HISTÓRICO" */
+}
+
+.current-call-section, .history-section {
+  background-color: #FFFFFF;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+h4 {
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #dee2e6;
+  text-transform: uppercase;
+}
+
+/* Estilo para a chamada atual (a mais recente do histórico) */
+.current-call {
+  background-color: #17A2B8; /* Azul-petróleo da imagem */
+  color: white;
+  padding: 1.5rem;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.current-call .ticket {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.current-call .desk {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+/* Estilo para a lista do histórico */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+.ticket-info .ticket {
+  font-weight: bold;
+  color: #343a40;
+}
+
+.ticket-info .name {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.desk-info .desk, .desk-info .time {
+  text-align: right;
+}
+
+.desk-info .desk {
+  font-weight: bold;
+  color: #343a40;
+}
+
+.desk-info .time {
+  font-size: 0.8rem;
+  color: #6c757d;
+}

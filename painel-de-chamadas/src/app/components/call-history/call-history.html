@@ -1,0 +1,22 @@
+<div class="current-call-section" *ngIf="historyData.length > 0">
+  <h4>SENHA ATUAL</h4>
+  <div class="current-call">
+    <span class="ticket">{{ historyData[0].ticket }}</span>
+    <span class="desk">{{ historyData[0].desk }}</span>
+  </div>
+</div>
+
+<div class="history-section" *ngIf="historyData.length > 1">
+  <h4>HISTÓRICO DE CHAMADAS</h4>
+  <ul>
+    <li *ngFor="let call of historyData.slice(1)">
+      <div class="ticket-info">
+        <div class="ticket">{{ call.ticket }}</div>
+        <div class="name">{{ call.name }}</div>
+      </div>
+      <div class="desk-info">
+        <div class="desk">{{ call.desk }}</div>
+        <div class="time">10:19</div> </div>
+    </li>
+  </ul>
+</div>

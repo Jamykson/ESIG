@@ -1,0 +1,43 @@
+// O container principal vai ocupar a tela e centralizar tudo
+.call-display-container {
+  position: fixed; // Fica fixo na tela, sobrepondo outros elementos
+  top: 0;
+  left: 0;
+  width: 100vw; // 100% da largura da tela
+  height: 100vh; // 100% da altura da tela
+
+  // Usamos flexbox para centralizar o conteúdo vertical e horizontalmente
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgba(10, 10, 10, 0.8); // Fundo escuro semitransparente
+  color: #FFFFFF; // Cor do texto branca
+  z-index: 10; // Garante que fique na frente do vídeo e do histórico
+}
+
+// Estilo para a SENHA (maior destaque)
+.ticket {
+  font-size: 10rem; // Tamanho de fonte bem grande
+  font-weight: bold;
+  line-height: 1;
+  color: #4cafef; // Uma cor de destaque (azul)
+}
+
+// Estilo para o NOME do paciente
+.name {
+  font-size: 4rem;
+  font-weight: 300; // Fonte mais leve
+  margin-top: 1rem;
+}
+
+// Estilo para o GUICHÊ de atendimento
+.desk {
+  font-size: 3rem;
+  font-weight: 500;
+  margin-top: 2.5rem;
+  padding: 1rem 2rem;
+  border: 2px solid #FFFFFF;
+  border-radius: 8px;
+}

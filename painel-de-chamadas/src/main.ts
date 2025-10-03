@@ -1,6 +1,20 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { App } from './app/app';
+import { AppComponent } from './app/app';
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+// --- Importações para o idioma e providers ---
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+
+// --- Registra os dados de localidade do Português ---
+registerLocaleData(localePt);
+
+// --- A configuração de inicialização sem as rotas ---
+bootstrapApplication(AppComponent, {
+  providers: [
+    // A linha 'provideRouter(routes)' foi removida daqui
+
+    // Define o idioma padrão da aplicação como 'pt-BR'
+    { provide: LOCALE_ID, useValue: 'pt-BR' }
+  ]
+}).catch((err) => console.error(err));

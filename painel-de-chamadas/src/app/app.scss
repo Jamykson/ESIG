@@ -1,0 +1,105 @@
+/* --- Estilo do Cabeçalho Superior --- */
+.app-header {
+  background-color: #0a5750;
+  color: white;
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  
+  /* Novas regras para alinhar os conteúdos */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Manda cada div para uma extremidade */
+  padding: 0 2rem;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+/* Container para os itens da esquerda */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Espaçamento entre itens da esquerda, se houver mais */
+}
+
+/* Container para os itens da direita */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* <-- AUMENTE OU DIMINUA ESTE VALOR */
+}
+
+.header-logo {
+  height: 40px;
+  width: auto;
+}
+
+/* --- Estilos do Conteúdo Principal --- */
+
+/* Remove margens e paddings padrão para ocupar a tela toda */
+:host {
+  display: block;
+  background-color: #E8EDF0; /* Cor de fundo cinza claro da imagem */
+  font-family: sans-serif;
+  padding-top: 60px; /* Adiciona um padding no topo para não ficar atrás do header */
+}
+
+/* Container principal que vai organizar as duas colunas */
+main {
+  display: grid; /* MUDAMOS PARA GRID */
+  grid-template-columns: 2fr 1fr; /* Divide a tela em 2 partes para a esquerda e 1 para a direita */
+  align-items: center; /* Centraliza os itens verticalmente */
+  padding: 2rem;
+  gap: 2rem;
+  height: calc(100vh - 60px); /* Ocupa a altura disponível */
+}
+
+
+/* Ajusta o contêiner do vídeo (a caixa azul interna) */
+.video-container-wrapper {
+  background-color: rgb(14, 26, 185);
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 900px;
+  max-height: 460px;
+  transform: translateY(-32px); /* <-- PROBLEMA ESTÁ AQUI */
+}
+
+/* Estilo para a nova moldura verde */
+.green-frame {
+  background-color: green;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  justify-self: center;
+  align-self: center;
+}
+
+/* Garante que o container interno do vídeo tenha a proporção 16:9 */
+.video-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+/* Ajusta o painel de chamadas para ocupar o espaço da direita */
+.calls-panel-wrapper {
+  flex: 1; /* Ocupa 1/4 do espaço total (3 para o vídeo, 1 para o painel) */
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Outros Estilos (Botão, etc.) --- */
+
+.simulation-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  padding: 10px 20px;
+  font-size: 16px;
+}

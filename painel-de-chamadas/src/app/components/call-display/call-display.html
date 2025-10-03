@@ -1,1 +1,5 @@
-<p>call-display works!</p>
+<div class="call-display-container" *ngIf="callData">
+  <div class="ticket">{{ callData.ticket }}</div>
+  <div class="name">{{ callData.name }}</div>
+  <div class="desk">{{ callData.desk }}</div>
+</div>
