@@ -1,121 +1,142 @@
 /* ================================= 
-   ESTILOS GLOBAIS E LAYOUT PRINCIPAL
+   ESTILOS GLOBAIS E LAYOUT PRINCIPAL (GRID)
    ================================= */
 
 :host {
-  display: block;
+  display: grid;
+  grid-template-columns: 1fr 400px; /* Coluna do vídeo flexível, coluna da sidebar fixa */
+  grid-template-rows: 50px 1fr;    /* Linha do cabeçalho fixa, linha do conteúdo flexível */
+  grid-template-areas:
+    "header header"
+    "video  sidebar";
+  height: 100vh;
+  width: 100vw;
   background-color: #f3f4f6;
   font-family: sans-serif;
-  min-height: 100vh;
-  min-width: 100vw;
+  overflow: hidden; /* Garante que nada saia da tela */
 }
 
+/* O elemento 'main' agora pode ser um simples container para o vídeo, 
+   ou você pode aplicar o grid-area diretamente no componente de vídeo */
 main {
-  display: grid;
-  grid-template-columns: 60fr 40fr;
-  align-items: stretch;
-  padding: 80px 2rem 2rem 2rem;
-  gap: 2rem;
-  height: 100vh;
+  grid-area: video; /* Associa este container à área 'video' do grid */
+  padding: 2rem;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ================================= 
    CABEÇALHO SUPERIOR
    ================================= */
-/* ... (sem alterações aqui) ... */
+
 .app-header {
+  grid-area: header; /* Associa o cabeçalho à área 'header' do grid */
   background-color: #0a5750;
   color: white;
-  width: 100%;
-  height: 50px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
   box-sizing: border-box;
+  width: 100%; /* Ocupa 100% da área do grid designada */
+  /* Removemos position: fixed, top, left, z-index */
 }
+
 .header-left, .header-right {
   display: flex;
   align-items: center;
   gap: 1.5rem;
 }
+
 .header-logo {
   height: 40px;
   width: auto;
 }
 
-/* ================================= 
-   CONTEÚDO DO VÍDEO (LADO ESQUERDO)
+/* =================================
+   PAINEL DEO VIDEO (LADO ESQUERDO)
    ================================= */
 
-/* CAMADA 1: A Moldura Externa (a maior de todas) */
+/* Container do vídeo (à esquerda) - O RETÂNGULO BRANCO EXTERNO */
 .green-frame {
-  background-color: #FFFFFF; /* Cor base da moldura externa */
-  padding: 1rem; /* Espaçamento que define a "borda" branca */
-  border-radius: 12px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  width: 100%;
-  justify-self: center;
-  align-self: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* CAMADA 2: O Container Interno (cinza claro) */
-.video-container-wrapper {
-  background-color: #f3f4f6; /* Cor cinza claro para a segunda camada */
+  flex: 1;
+  min-width: 0;
+  background-color: #FFFFFF;
   border-radius: 8px;
-  width: 100%;
-  
-  /* Padding que cria a "borda" cinza claro em volta do vídeo */
-  padding: 1rem;
-  
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden; /* Garante que o vídeo não "vaze" */
 }
 
-/* CAMADA 3: O Player de Vídeo (a menor de todas) */
-.video-container {
-  width: 100%; /* Ocupa 100% do espaço dentro do container cinza */
-  aspect-ratio: 16 / 9;
-  position: relative;
-  border-radius: 6px; /* Adiciona bordas arredondadas ao próprio vídeo */
-  overflow: hidden; /* Garante que o conteúdo do YouTube respeite as bordas */
+/* O RETÂNGULO CINZA INTERNO */
+.video-container-wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #e9ecef;
+  padding: 1rem;
+  border-radius: 6px;
+  box-sizing: border-box;
 }
+
+/* Container final do vídeo e o próprio player */
+.video-container, app-video-player {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 /* ================================= 
    PAINEL DE CHAMADAS (LADO DIREITO)
    ================================= */
-/* ... (sem alterações aqui) ... */
+
 .calls-panel-wrapper {
+  /* ============================================== */
+  /* 1. POSICIONAMENTO COM ESPAÇAMENTO             */
+  /* ============================================== */
+
+  /* Fixa o painel em relação à janela. */
+  position: fixed;
+
+  /* IMPORTANTE: Topo = altura do header (50px) + o espaço desejado (2rem). */
+  top: calc(50px + 2rem);
+
+  /* IMPORTANTE: Distância da borda direita = o espaço desejado (2rem). */
+  right: 2rem;
+
+  /* Largura fixa do painel. */
+  width: 550px;
+
+  /* IMPORTANTE: Altura = 100% da tela - altura do header - espaço de cima - espaço de baixo. */
+  height: calc(100vh - 100px - 4rem);
+
+  /* Garante que o painel fique por cima de outros elementos. */
+  z-index: 1000;
+
+
+  /* ============================================== */
+  /* 2. ESTILO INTERNO (permanece o mesmo)         */
+  /* ============================================== */
   background-color: #FFFFFF;
   padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  align-self: center;
-  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  overflow-y: auto;
 }
 
 /* ================================= 
    OUTROS
    ================================= */
-/* ... (sem alterações aqui) ... */
+
 .simulation-button {
-  position: fixed;
+  position: fixed; /* 'fixed' é ideal para botões flutuantes */
   bottom: 20px;
   left: 20px;
-  z-index: 100;
+  z-index: 1000;
   padding: 10px 20px;
   font-size: 16px;
 }

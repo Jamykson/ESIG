@@ -13,42 +13,55 @@
   padding-bottom: 0.5rem;
   
   h3 {
-    font-size: 1.1rem;
+    font-size: 1.35rem;
     color: #343a40;
     margin: 0;
     font-weight: 700;
   }
   .panel-icons {
-    color: #6c757d;
-    font-size: 1.2rem;
-    display: flex;
-    gap: 0.5rem;
+  color: #707280; /* Um cinza mais suave para os ícones */
+  font-size: 1.1rem; /* Tamanho dos ícones */
+  display: flex;
+  gap: 0.75rem; /* Espaço entre os ícones */
+
+  /* Estiliza cada ícone individualmente */
+  i {
+    cursor: pointer; /* Muda o cursor para uma "mãozinha" */
+    transition: color 0.2s ease-in-out; /* Adiciona uma transição suave de cor */
   }
+
+  /* Efeito hover: muda a cor do ícone quando o rato está sobre ele */
+  i:hover {
+    color: #000000; /* Cor mais escura no hover */
+  }
+}
 }
 
 /* Títulos "SENHA ATUAL" e "HISTÓRICO" */
 h4 {
-  font-size: 0.75rem;
+  font-size: 1.05rem;
   color: #6c757d;
   font-weight: 700;
   /* ATUALIZAÇÃO: Diminuímos a margem superior de 1.5rem para 0.5rem */
   margin: 0.5rem 0 0.5rem 0; 
+  margin-bottom: 1rem;
+  margin-top: 1rem;
   text-transform: uppercase;
   border: none;
 }
 
 /* Card da Chamada Atual */
 .current-call-card {
-  background-color: #17a2b8; /* Cor azul-petróleo */
+  background-color: #14b8a6; /* Cor azul-petróleo */
   color: white;
-  padding: 0.75rem 1rem;
+  padding: 1.75rem 1rem;
   border-radius: 6px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   .ticket-info .ticket {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 700;
   }
   .ticket-info .name {
@@ -56,7 +69,7 @@ h4 {
     color: rgba(255, 255, 255, 0.8);
   }
   .desk {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     font-weight: 700;
   }
 }
@@ -68,34 +81,35 @@ h4 {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem; /* Espaço entre os cards cinzas */
+  gap: 0.75rem; /* Espaço entre os cards cinzas */
 }
 
 .history-section li {
   background-color: #f8f9fa; /* Fundo cinza claro */
   border-radius: 6px;
-  padding: 0.75rem 1rem;
+  padding: 1.5rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border: none;
-  
+  border-left: 5px solid #d1d5db;
+
   .ticket-info .ticket {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    color: #343a40;
+    color: #6f707b;
   }
   .ticket-info .name {
-    font-size: 0.7rem;
-    color: #6c757d;
+    font-size: 1.0rem;
+    color: #9ea5b1;
   }
   .desk-info {
     text-align: right;
-    font-size: 0.8rem;
-    color: #6c757d;
+    font-size: 1.0rem;
+    color: #9ea5b1;
     .desk {
       font-weight: 700;
-      color: #343a40;
+      color: #656683;
     }
   }
 }

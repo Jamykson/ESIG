@@ -1,31 +1,79 @@
+<!-- ======================================================================= -->
+<!-- CABEÇALHO SUPERIOR (HEADER)                                             -->
+<!-- Esta seção é o cabeçalho fixo que fica no topo da página.               -->
+<!-- ======================================================================= -->
 <div class="app-header">
+  <!-- Lado Esquerdo do Cabeçalho -->
   <div class="header-left">
     <span>CLINICA VALIDAÇÕES - JFS (MATRIZ)</span>
   </div>
 
+  <!-- Lado Direito do Cabeçalho -->
   <div class="header-right">
+    <!-- {{ currentDate }} é uma "interpolação" do Angular. -->
+    <!-- Ele pega o valor da variável 'currentDate' do seu arquivo .ts -->
+    <!-- e o exibe aqui como texto. -->
     <span>{{ currentDate }}</span>
+
+    <!-- <app-clock> é a tag de um outro componente Angular. -->
+    <!-- O Angular irá renderizar o template do ClockComponent neste local. -->
+    <!-- É usado para mostrar a hora atualizada. -->
     <app-clock></app-clock>
     <img src="assets/logo.svg" alt="Logo" class="header-logo">
   </div>
 </div>
 
+
+<!-- ======================================================================= -->
+<!-- CONTEÚDO PRINCIPAL (MAIN)                                               -->
+<!-- Esta tag <main> agrupa os dois painéis principais da tela: o vídeo      -->
+<!-- e a lista de chamadas.                                                  -->
+<!-- ======================================================================= -->
 <main>
+  <!-- Painel do Vídeo (Esquerda) -->
   <div class="green-frame">
-  <div class="video-container-wrapper">
-    <div class="video-container">
-      <app-video-player></app-video-player>
+    <div class="video-container-wrapper">
+      <div class="video-container">
+        <!-- <app-video-player> é o componente responsável por mostrar -->
+        <!-- e controlar o vídeo do YouTube. -->
+        <app-video-player></app-video-player>
+      </div>
     </div>
   </div>
-</div>
 
+  <!-- Painel de Chamadas (Direita) -->
   <div class="calls-panel-wrapper">
+    <!-- <app-call-history> é o componente que exibe a senha atual -->
+    <!-- e o histórico de chamadas. -->
+    <!-- [historyData]="callHistory" é um "Property Binding". Ele envia -->
+    <!-- os dados da variável 'callHistory' (do seu .ts) para dentro do -->
+    <!-- componente filho 'app-call-history', que os recebe numa propriedade -->
+    <!-- chamada 'historyData'. -->
     <app-call-history [historyData]="callHistory"></app-call-history>
   </div>
 </main>
 
+
+<!-- ======================================================================= -->
+<!-- TELA DE CHAMADA (MODAL)                                                 -->
+<!-- Este componente só aparece quando uma chamada é ativada.                -->
+<!-- ======================================================================= -->
+<!-- *ngIf="isCallActive" é uma "diretiva estrutural". -->
+<!-- O componente <app-call-display> só será criado e exibido na tela -->
+<!-- SE a variável 'isCallActive' no seu arquivo .ts for 'true'. -->
+<!-- [callData]="currentCall" envia os dados da chamada atual para o -->
+<!-- componente, para que ele saiba qual senha e nome exibir. -->
 <app-call-display *ngIf="isCallActive" [callData]="currentCall"></app-call-display>
 
+
+<!-- ======================================================================= -->
+<!-- BOTÃO DE SIMULAÇÃO                                                      -->
+<!-- Este é o botão que dispara a lógica de uma nova chamada.                -->
+<!-- ======================================================================= -->
+<!-- (click)="simulateNewCall()" é um "Event Binding". -->
+<!-- Quando o usuário clica neste botão, ele executa a função -->
+<!-- 'simulateNewCall()' que está definida no seu arquivo .ts. -->
 <button class="simulation-button" (click)="simulateNewCall()">
   Simular Nova Chamada
 </button>
+
