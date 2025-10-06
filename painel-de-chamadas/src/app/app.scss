@@ -56,36 +56,62 @@ main {
 }
 
 /* =================================
-   PAINEL DEO VIDEO (LADO ESQUERDO)
+   PAINEL DE VIDEO (LADO ESQUERDO) - FIXO
    ================================= */
 
 /* Container do vídeo (à esquerda) - O RETÂNGULO BRANCO EXTERNO */
 .green-frame {
-  flex: 1;
-  min-width: 0;
-  background-color: #FFFFFF;
+  /* ... (suas propriedades de position, top, left, etc. continuam iguais) ... */
+  position: fixed;
+  top: calc(50px + 2rem);
+  left: 2rem;
+  height: calc(100vh - 50px - 4rem);
+  width: 60vw;
+  background-color: #e5e7eb;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 1.5rem;
   display: flex;
+  box-sizing: border-box;
+
+  /*
+    <<<<< 1. SOMBRA EXTERNA PARA EFEITO DE SOBREPOSIÇÃO >>>>>
+    Esta sombra faz o painel parecer flutuar sobre o fundo da página.
+  */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
 }
+
 
 /* O RETÂNGULO CINZA INTERNO */
 .video-container-wrapper {
   width: 100%;
   height: 100%;
-  background-color: #e9ecef;
+  background-color: #e5e7eb;
   padding: 1rem;
   border-radius: 6px;
   box-sizing: border-box;
-}
 
+  /*
+    <<<<< 2. SOMBRA INTERNA PARA EFEITO DE PROFUNDIDADE >>>>>
+    A palavra-chave 'inset' cria a sombra para dentro, fazendo o container
+    parecer afundado ou pressionado.
+  */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;      /* Centraliza na vertical */
+  justify-content: center;  /* Centraliza na horizontal */
+}
 /* Container final do vídeo e o próprio player */
 .video-container, app-video-player {
-  width: 100%;
-  height: 100%;
-  display: block;
+  width: 99%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-0.5%);
 }
+
 
 /* ================================= 
    PAINEL DE CHAMADAS (LADO DIREITO)
@@ -139,4 +165,13 @@ main {
   z-index: 1000;
   padding: 10px 20px;
   font-size: 16px;
+}
+
+/* APLICA-SE DIRETAMENTE AO IFRAME DO YOUTUBE */
+:host ::ng-deep app-video-player iframe {
+  width: 100%;
+  height: 100%;
+
+  /* O TRUQUE: Aumenta o vídeo em 1% para cobrir as linhas pretas */
+  transform: scale(1.01);
 }
