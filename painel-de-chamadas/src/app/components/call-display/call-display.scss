@@ -1,43 +1,86 @@
-// O container principal vai ocupar a tela e centralizar tudo
-.call-display-container {
-  position: fixed; // Fica fixo na tela, sobrepondo outros elementos
-  top: 0;
-  left: 0;
-  width: 100vw; // 100% da largura da tela
-  height: 100vh; // 100% da altura da tela
-
-  // Usamos flexbox para centralizar o conteúdo vertical e horizontalmente
+/* =================================
+   CONTAINER PRINCIPAL
+   ================================= */
+.call-display-content {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 
-  background-color: rgba(10, 10, 10, 0.8); // Fundo escuro semitransparente
-  color: #FFFFFF; // Cor do texto branca
-  z-index: 10; // Garante que fique na frente do vídeo e do histórico
+  /*
+    <<<<< ALTERAÇÃO PRINCIPAL AQUI >>>>>
+    Trocamos 'space-between' por 'center' para agrupar e centralizar
+    todo o conteúdo na vertical.
+  */
+  justify-content: center;
+
+  padding: 4rem;
+  box-sizing: border-box;
+  text-align: center;
+  color: white !important; /* Garante que todo o texto seja branco */
+
+  /* Animação de fade-in suave quando o elemento aparece */
+  animation: fadeIn 0.5s ease-in-out forwards;
 }
 
-// Estilo para a SENHA (maior destaque)
+/* Animação Keyframe para o fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =================================
+   ESTILOS DOS TEXTOS
+   ================================= */
+
+/* Container para a informação central (senha, especialidade, nome) */
+.call-info {
+  /* Removemos 'flex: 1' pois não precisamos mais empurrar o guichê para baixo */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
 .ticket {
-  font-size: 10rem; // Tamanho de fonte bem grande
-  font-weight: bold;
+  font-size: 9vw;
+  font-weight: 700;
   line-height: 1;
-  color: #4cafef; // Uma cor de destaque (azul)
+  margin-bottom: 1rem;
 }
 
-// Estilo para o NOME do paciente
+.specialty,
 .name {
-  font-size: 4rem;
-  font-weight: 300; // Fonte mais leve
-  margin-top: 1rem;
+  font-size: 2.2vw;
+  font-weight: 400;
+  text-transform: uppercase;
 }
 
-// Estilo para o GUICHÊ de atendimento
-.desk {
-  font-size: 3rem;
-  font-weight: 500;
-  margin-top: 2.5rem;
-  padding: 1rem 2rem;
-  border: 2px solid #FFFFFF;
-  border-radius: 8px;
+.name {
+  font-weight: 700;
+  margin-top: 0.5rem;
 }
+
+/* =================================
+   ESTILO DO GUICHÊ
+   ================================= */
+.desk {
+  font-size: 3vw;
+  font-weight: 700;
+
+  /*
+    <<<<< ALTERAÇÃO AQUI >>>>>
+    Adicionamos uma margem para separar o guichê do nome do paciente.
+    Removemos o fundo colorido, deixando apenas o texto branco.
+  */
+  margin-top: 3rem;
+}
+

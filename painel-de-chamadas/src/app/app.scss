@@ -1,38 +1,25 @@
-/* ================================= 
-   ESTILOS GLOBAIS E LAYOUT PRINCIPAL (GRID)
+/* =================================
+   ESTILOS GLOBAIS
    ================================= */
-
 :host {
-  display: grid;
-  grid-template-columns: 1fr 400px; /* Coluna do vídeo flexível, coluna da sidebar fixa */
-  grid-template-rows: 50px 1fr;    /* Linha do cabeçalho fixa, linha do conteúdo flexível */
-  grid-template-areas:
-    "header header"
-    "video  sidebar";
-  height: 100vh;
-  width: 100vw;
+  display: block;
   background-color: #f3f4f6;
   font-family: sans-serif;
-  overflow: hidden; /* Garante que nada saia da tela */
-}
-
-/* O elemento 'main' agora pode ser um simples container para o vídeo, 
-   ou você pode aplicar o grid-area diretamente no componente de vídeo */
-main {
-  grid-area: video; /* Associa este container à área 'video' do grid */
-  padding: 2rem;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-/* ================================= 
-   CABEÇALHO SUPERIOR
+/* =================================
+   CABEÇALHO SUPERIOR (FIXO)
    ================================= */
-
 .app-header {
-  grid-area: header; /* Associa o cabeçalho à área 'header' do grid */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
   background-color: #0a5750;
   color: white;
   display: flex;
@@ -40,110 +27,66 @@ main {
   justify-content: space-between;
   padding: 0 2rem;
   box-sizing: border-box;
-  width: 100%; /* Ocupa 100% da área do grid designada */
-  /* Removemos position: fixed, top, left, z-index */
+  z-index: 1500;
 }
 
-.header-left, .header-right {
+.header-left {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+}
+
+/* CORREÇÃO PARA O LAYOUT DO LADO DIREITO DO CABEÇALHO */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* Mantém o espaçamento entre os itens */
+}
+
+/* Garante que o texto da data e da hora não seja "esmagado" */
+.header-right span,
+.header-right app-clock {
+  white-space: nowrap; /* Impede que o texto quebre para a linha de baixo */
+  flex-shrink: 0;      /* Impede que o elemento encolha */
 }
 
 .header-logo {
-  height: 40px;
+  height: 30px; /* Ajustei a altura para um visual mais equilibrado */
   width: auto;
 }
 
 /* =================================
-   PAINEL DE VIDEO (LADO ESQUERDO) - FIXO
+   LAYOUT PRINCIPAL COM FLEXBOX
    ================================= */
+main {
+  display: flex;
+  gap: 2rem;
+  padding: calc(50px + 2rem) 2rem 2rem 2rem;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
 
-/* Container do vídeo (à esquerda) - O RETÂNGULO BRANCO EXTERNO */
+/* =================================
+   PAINEL DE VIDEO (ESQUERDA) - FLUIDO
+   ================================= */
 .green-frame {
-  /* ... (suas propriedades de position, top, left, etc. continuam iguais) ... */
-  position: fixed;
-  top: calc(50px + 2rem);
-  left: 2rem;
-  height: calc(100vh - 50px - 4rem);
-  width: 60vw;
+  flex: 1;
+  min-width: 0;
   background-color: #e5e7eb;
   border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
   padding: 1.5rem;
   display: flex;
   box-sizing: border-box;
-
-  /*
-    <<<<< 1. SOMBRA EXTERNA PARA EFEITO DE SOBREPOSIÇÃO >>>>>
-    Esta sombra faz o painel parecer flutuar sobre o fundo da página.
-  */
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
+  transition: all 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-
-/* O RETÂNGULO CINZA INTERNO */
-.video-container-wrapper {
-  width: 100%;
-  height: 100%;
-  background-color: #e5e7eb;
-  padding: 1rem;
-  border-radius: 6px;
-  box-sizing: border-box;
-
-  /*
-    <<<<< 2. SOMBRA INTERNA PARA EFEITO DE PROFUNDIDADE >>>>>
-    A palavra-chave 'inset' cria a sombra para dentro, fazendo o container
-    parecer afundado ou pressionado.
-  */
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.12);
-  display: flex;
-  align-items: center;      /* Centraliza na vertical */
-  justify-content: center;  /* Centraliza na horizontal */
-}
-/* Container final do vídeo e o próprio player */
-.video-container, app-video-player {
-  width: 99%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(-0.5%);
-}
-
-
-/* ================================= 
-   PAINEL DE CHAMADAS (LADO DIREITO)
+/* =================================
+   PAINEL DE CHAMADAS (DIREITA) - LARGURA FIXA
    ================================= */
-
 .calls-panel-wrapper {
-  /* ============================================== */
-  /* 1. POSICIONAMENTO COM ESPAÇAMENTO             */
-  /* ============================================== */
-
-  /* Fixa o painel em relação à janela. */
-  position: fixed;
-
-  /* IMPORTANTE: Topo = altura do header (50px) + o espaço desejado (2rem). */
-  top: calc(50px + 2rem);
-
-  /* IMPORTANTE: Distância da borda direita = o espaço desejado (2rem). */
-  right: 2rem;
-
-  /* Largura fixa do painel. */
-  width: 550px;
-
-  /* IMPORTANTE: Altura = 100% da tela - altura do header - espaço de cima - espaço de baixo. */
-  height: calc(100vh - 100px - 4rem);
-
-  /* Garante que o painel fique por cima de outros elementos. */
-  z-index: 1000;
-
-
-  /* ============================================== */
-  /* 2. ESTILO INTERNO (permanece o mesmo)         */
-  /* ============================================== */
+  width: 370px;
+  flex-shrink: 0;
   background-color: #FFFFFF;
   padding: 1.5rem;
   border-radius: 8px;
@@ -154,24 +97,55 @@ main {
   overflow-y: auto;
 }
 
-/* ================================= 
-   OUTROS
+/* =================================
+   TELA DE CHAMADA (O RETÂNGULO PRETO)
    ================================= */
+app-call-display {
+  position: absolute;
+  top: calc(50px + 2rem);
+  left: 2rem;
+  height: calc(100vh - 50px - 4rem);
+  width: calc(100% - 370px - 6rem);
+  background-color: #334155;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 500;
+  transition: opacity 0.4s 0.2s ease-in-out;
+}
 
+/* =================================
+   ANIMAÇÃO QUANDO A CHAMADA ESTÁ ATIVA
+   ================================= */
+main.call-active .green-frame {
+  position: fixed;
+  width: 370px;
+  height: 208px;
+  bottom: 2rem;
+  right: 2rem;
+  left: auto;
+  top: auto;
+  z-index: 1100;
+}
+
+main.call-active ~ app-call-display {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* =================================
+   ESTILOS INTERNOS E OUTROS
+   ================================= */
+.video-container-wrapper, .video-container, app-video-player, :host ::ng-deep app-video-player iframe {
+  width: 100%;
+  height: 100%;
+}
 .simulation-button {
-  position: fixed; /* 'fixed' é ideal para botões flutuantes */
+  position: fixed;
   bottom: 20px;
   left: 20px;
-  z-index: 1000;
+  z-index: 2000;
   padding: 10px 20px;
   font-size: 16px;
 }
 
-/* APLICA-SE DIRETAMENTE AO IFRAME DO YOUTUBE */
-:host ::ng-deep app-video-player iframe {
-  width: 100%;
-  height: 100%;
-
-  /* O TRUQUE: Aumenta o vídeo em 1% para cobrir as linhas pretas */
-  transform: scale(1.01);
-}

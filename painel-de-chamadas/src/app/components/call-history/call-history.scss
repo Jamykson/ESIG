@@ -13,7 +13,7 @@
   padding-bottom: 0.5rem;
   
   h3 {
-    font-size: 1.35rem;
+    font-size: 1.05rem;
     color: #343a40;
     margin: 0;
     font-weight: 700;
@@ -39,7 +39,7 @@
 
 /* Títulos "SENHA ATUAL" e "HISTÓRICO" */
 h4 {
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   color: #6c757d;
   font-weight: 700;
   /* ATUALIZAÇÃO: Diminuímos a margem superior de 1.5rem para 0.5rem */
@@ -54,22 +54,22 @@ h4 {
 .current-call-card {
   background-color: #14b8a6; /* Cor azul-petróleo */
   color: white;
-  padding: 1.75rem 1rem;
+  padding: 0.75rem 1rem;
   border-radius: 6px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   .ticket-info .ticket {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 700;
   }
   .ticket-info .name {
-    font-size: 0.75rem;
+    font-size: 1.05rem;
     color: rgba(255, 255, 255, 0.8);
   }
   .desk {
-    font-size: 1.3rem;
+    font-size: 1.05rem;
     font-weight: 700;
   }
 }
@@ -87,7 +87,7 @@ h4 {
 .history-section li {
   background-color: #f8f9fa; /* Fundo cinza claro */
   border-radius: 6px;
-  padding: 1.5rem 1rem;
+  padding: 0.5rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -95,17 +95,17 @@ h4 {
   border-left: 5px solid #d1d5db;
 
   .ticket-info .ticket {
-    font-size: 1.2rem;
+    font-size: 1.0rem;
     font-weight: 700;
     color: #6f707b;
   }
   .ticket-info .name {
-    font-size: 1.0rem;
+    font-size: 0.9rem;
     color: #9ea5b1;
   }
   .desk-info {
     text-align: right;
-    font-size: 1.0rem;
+    font-size: 0.9rem;
     color: #9ea5b1;
     .desk {
       font-weight: 700;

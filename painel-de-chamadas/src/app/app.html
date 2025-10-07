@@ -29,7 +29,7 @@
 <!-- Esta tag <main> agrupa os dois painéis principais da tela: o vídeo      -->
 <!-- e a lista de chamadas.                                                  -->
 <!-- ======================================================================= -->
-<main>
+<main [class.call-active]="isCallActive">
   <!-- Painel do Vídeo (Esquerda) -->
   <div class="green-frame">
     <div class="video-container-wrapper">
