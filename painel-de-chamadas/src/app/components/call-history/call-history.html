@@ -11,7 +11,11 @@
   <div class="current-call-card">
     <div class="ticket-info">
       <div class="ticket">{{ historyData[0].ticket }}</div>
-      <div class="name">{{ historyData[0].name }}</div>
+      <!--
+        <<<<< ALTERAÇÃO AQUI >>>>>
+        Agora também chamamos a função para abreviar o nome da senha atual.
+      -->
+      <div class="name">{{ abbreviateName(historyData[0].name) }}</div>
     </div>
     <div class="desk">{{ historyData[0].desk }}</div>
   </div>
@@ -20,13 +24,22 @@
 <div class="history-section" *ngIf="historyData.length > 1">
   <h4>HISTÓRICO DE CHAMADAS</h4>
   <ul>
+    <!-- Usamos slice(1) para mostrar todos os itens, exceto o primeiro -->
     <li *ngFor="let call of historyData.slice(1)">
       <div class="ticket-info">
         <div class="ticket">{{ call.ticket }}</div>
-        <div class="name">{{ call.name }}</div>
+
+        <!--
+          <<<<< ALTERAÇÃO IMPORTANTE AQUI >>>>>
+          Agora chamamos a função abbreviateName() para formatar o nome
+          de cada item do histórico.
+        -->
+        <div class="name">{{ abbreviateName(call.name) }}</div>
+
       </div>
       <div class="desk-info">
-        <div class="time">17:13</div> <div class="desk">{{ call.desk }}</div>
+        <div class="time">10:37</div>
+        <div class="desk">{{ call.desk }}</div>
       </div>
     </li>
   </ul>

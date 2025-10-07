@@ -7,80 +7,96 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  /*
-    <<<<< ALTERAÇÃO PRINCIPAL AQUI >>>>>
-    Trocamos 'space-between' por 'center' para agrupar e centralizar
-    todo o conteúdo na vertical.
-  */
-  justify-content: center;
-
-  padding: 4rem;
+  /* Empurra o .call-info para cima e o .desk para baixo */
+  justify-content: space-between;
+  padding: 2rem;
   box-sizing: border-box;
   text-align: center;
-  color: white !important; /* Garante que todo o texto seja branco */
-
-  /* Animação de fade-in suave quando o elemento aparece */
   animation: fadeIn 0.5s ease-in-out forwards;
+  /* Essencial para o posicionamento absoluto do título */
+  position: relative;
 }
 
-/* Animação Keyframe para o fade-in */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* =================================
+   TÍTULO "CHAMADA"
+   ================================= */
+.call-title {
+  /* Posiciona o título de forma absoluta dentro do container */
+  position: absolute;
+  top: 2rem;    /* Distância do topo */
+  left: 2rem;   /* Distância da esquerda */
+
+  /* Estilo do texto */
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8) !important; /* Branco com uma leve transparência */
 }
 
 /* =================================
    ESTILOS DOS TEXTOS
    ================================= */
 
-/* Container para a informação central (senha, especialidade, nome) */
+/* Container da informação principal */
 .call-info {
-  /* Removemos 'flex: 1' pois não precisamos mais empurrar o guichê para baixo */
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+
+  /*
+    <<<<< ALTERE ESTA LINHA PARA ALINHAR NO TOPO >>>>>
+    'flex-start' alinha o conteúdo no início (topo) do container.
+  */
+  justify-content: flex-start;
+
   width: 100%;
+  padding-top: 2rem; /* Este padding garante o espaçamento a partir do topo */
+}
+
+.ticket, .specialty, .name, .desk {
+  color: white !important;
 }
 
 .ticket {
-  font-size: 9vw;
+  font-size: 7.0vw;
   font-weight: 700;
   line-height: 1;
-  margin-bottom: 1rem;
 }
 
-.specialty,
-.name {
-  font-size: 2.2vw;
-  font-weight: 400;
+.specialty {
+  font-size: 1.7vw;
+  margin-top: 1rem;
   text-transform: uppercase;
 }
 
 .name {
+  font-size: 2.2vw;
   font-weight: 700;
   margin-top: 0.5rem;
+  text-transform: uppercase;
 }
 
 /* =================================
    ESTILO DO GUICHÊ
    ================================= */
 .desk {
+  width: 100%;
+  
+  /*
+    <<<<< CORREÇÃO IMPORTANTE AQUI >>>>>
+    A diretiva !important força a aplicação da cor de fundo,
+    garantindo que o retângulo apareça.
+  */
+  background-color: #2dd4bf !important;
+  
   font-size: 3vw;
   font-weight: 700;
-
-  /*
-    <<<<< ALTERAÇÃO AQUI >>>>>
-    Adicionamos uma margem para separar o guichê do nome do paciente.
-    Removemos o fundo colorido, deixando apenas o texto branco.
-  */
-  margin-top: 3rem;
+  padding: 0.9rem 0;
+  border-radius: 8px;
 }
-

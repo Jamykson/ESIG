@@ -104,9 +104,14 @@ main {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
   overflow-y: auto;
+
+  /* Prepara o painel para animar o seu padding inferior */
+  transition: all 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
+
+/* <<<<<<<<<<<<<<< REMOVEMOS O BLOCO DE CÓDIGO ANTERIOR DAQUI >>>>>>>>>>>>>>> */
+
 
 /* =================================
    TELA DE CHAMADA (O RETÂNGULO PRETO)
@@ -120,7 +125,7 @@ app-call-display {
   /* A largura é calculada para preencher o espaço do vídeo */
   width: calc(100vw - 370px - 6rem); /* tela - painel direito - espaçamentos */
   
-  background-color: #212529; /* Cor escura */
+  background-color: #334155; /* Cor escura */
   border-radius: 8px;
   
   /* Começa invisível e por baixo de tudo */
@@ -135,16 +140,41 @@ app-call-display {
 /* =================================
    ANIMAÇÃO QUANDO A CHAMADA ESTÁ ATIVA
    ================================= */
-main.call-active .green-frame {
-  /* Durante a animação, o painel de vídeo fica fixo para se mover livremente */
-  position: fixed;
-  width: 370px;
-  height: 208px;
-  bottom: 2rem;
-  right: 2rem;
-  left: auto;
-  top: auto;
-  z-index: 1100; /* Garante que o vídeo fique por cima */
+main.call-active {
+  /* 1. O painel de vídeo move-se para o CANTO INFERIOR DIREITO */
+  .green-frame {
+    position: fixed;
+    width: 370px;
+    height: 208px;
+    bottom: 2rem;
+    right: 2rem;
+    left: auto;
+    top: auto;
+    z-index: 1100;
+    background-color: #FFFFFF;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  /*
+    <<<<< 2. O painel de chamadas move-se para o CANTO SUPERIOR DIREITO >>>>>
+  */
+  .calls-panel-wrapper {
+    position: fixed;
+    width: 340px; /* Mantém a mesma largura */
+
+    /* Define a nova posição no CANTO SUPERIOR DIREITO */
+    top: calc(50px + 2rem);
+    right: 2rem;
+
+    /* A altura é calculada para não colidir com o vídeo em baixo */
+    height: calc(100vh - 50px - 208px - 6rem);
+
+    /* Anula a posição do Flexbox */
+    left: auto;
+    bottom: auto;
+    z-index: 1050; /* Fica abaixo do vídeo, mas acima do fundo */
+  }
 }
 
 /* O seletor ~ encontra o app-call-display que é irmão do main */

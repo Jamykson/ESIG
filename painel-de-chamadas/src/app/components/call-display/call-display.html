@@ -1,5 +1,14 @@
-<div class="call-display-container" *ngIf="callData">
-  <div class="ticket">{{ callData.ticket }}</div>
-  <div class="name">{{ callData.name }}</div>
-  <div class="desk">{{ callData.desk }}</div>
+<div class="call-display-content">
+  <!-- 1. O título que tinha desaparecido -->
+  <div class="call-title">CHAMADA</div>
+
+  <!-- 2. O container para a informação central -->
+  <div class="call-info">
+    <div class="ticket">{{ callData?.ticket }}</div>
+    <div class="specialty">{{ callData?.specialty }}</div>
+    <div class="name">{{ callData?.name }}</div>
+  </div>
+
+  <!-- 3. O guichê que fica no rodapé -->
+  <div class="desk">{{ callData?.desk }}</div>
 </div>
