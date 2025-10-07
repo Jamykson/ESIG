@@ -1,7 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// Definimos a interface 'Call' para que o componente saiba a estrutura dos dados
 interface Call {
   ticket: string;
   name: string;
@@ -16,29 +15,29 @@ interface Call {
   templateUrl: './call-history.html',
   styleUrls: ['./call-history.scss']
 })
-export class CallHistory {
+export class CallHistory implements OnInit {
   @Input() historyData: Call[] = [];
+  @Input() showCurrent: boolean = true;
 
-  /**
-   * ESTA É A FUNÇÃO QUE ESTAVA EM FALTA
-   * ------------------------------------
-   * Ela recebe um nome completo (ex: "MARCIO PABLO ALVES") e o transforma
-   * no formato abreviado (ex: "M. Pablo").
-   */
+  /** Cor da borda esquerda dos cards do histórico */
+  @Input() borderColor: string = '#d3dbd1ff';
+
+  constructor(private hostElement: ElementRef) {}
+
+  ngOnInit() {
+    // Define a variável CSS --border-color no host para que o SCSS use
+    this.hostElement.nativeElement.style.setProperty('--border-color', this.borderColor);
+  }
+
+  /** Abrevia o nome completo para iniciais */
   public abbreviateName(fullName: string): string {
-    if (!fullName) {
-      return '';
-    }
-
+    if (!fullName) return '';
     const parts = fullName.trim().split(' ');
     if (parts.length < 2) {
-      // Se tiver só um nome, retorna esse nome
       return parts[0].charAt(0).toUpperCase() + parts[0].slice(1).toLowerCase();
     }
-
     const firstNameInitial = parts[0].charAt(0).toUpperCase();
     const secondName = parts[1].charAt(0).toUpperCase() + parts[1].slice(1).toLowerCase();
-
     return `${firstNameInitial}. ${secondName}`;
   }
 }

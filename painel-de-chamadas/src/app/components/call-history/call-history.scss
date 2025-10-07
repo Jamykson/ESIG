@@ -92,7 +92,9 @@ h4 {
   justify-content: space-between;
   align-items: center;
   border: none;
-  border-left: 5px solid #d1d5db;
+
+  /* Use a variável CSS para a borda */
+  border-left: 5px solid var(--border-color, #d1d5db);
 
   .ticket-info .ticket {
     font-size: 1.0rem;
@@ -112,4 +114,9 @@ h4 {
       color: #656683;
     }
   }
+}
+
+/* Historico de chamadas - Segunda tela (call-active) */
+:host ::ng-deep main.call-active .history-section li {
+  border-left: 5px solid #0a5750; /* Substitua pela cor desejada */
 }

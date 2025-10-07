@@ -1,41 +1,33 @@
-<div class="panel-header">
-  <h3>CHAMADAS</h3>
-  <div class="panel-icons">
-    <i class="fa-solid fa-volume-high"></i>
-    <i class="fa-solid fa-expand"></i>
-  </div>
-</div>
-
-<div class="current-call-section" *ngIf="historyData.length > 0">
-  <h4>SENHA ATUAL</h4>
-  <div class="current-call-card">
-    <div class="ticket-info">
-      <div class="ticket">{{ historyData[0].ticket }}</div>
-      <!--
-        <<<<< ALTERAÇÃO AQUI >>>>>
-        Agora também chamamos a função para abreviar o nome da senha atual.
-      -->
-      <div class="name">{{ abbreviateName(historyData[0].name) }}</div>
+<!-- Cabeçalho e senha atual só aparecem se showCurrent for true -->
+<div *ngIf="showCurrent">
+  <div class="panel-header">
+    <h3>CHAMADAS</h3>
+    <div class="panel-icons">
+      <i class="fa-solid fa-volume-high"></i>
+      <i class="fa-solid fa-expand"></i>
     </div>
-    <div class="desk">{{ historyData[0].desk }}</div>
+  </div>
+
+  <div class="current-call-section" *ngIf="historyData.length > 0">
+    <h4>SENHA ATUAL</h4>
+    <div class="current-call-card">
+      <div class="ticket-info">
+        <div class="ticket">{{ historyData[0].ticket }}</div>
+        <div class="name">{{ abbreviateName(historyData[0].name) }}</div>
+      </div>
+      <div class="desk">{{ historyData[0].desk }}</div>
+    </div>
   </div>
 </div>
 
-<div class="history-section" *ngIf="historyData.length > 1">
+<!-- Histórico sempre aparece -->
+<div class="history-section" *ngIf="historyData.length > (showCurrent ? 1 : 0)">
   <h4>HISTÓRICO DE CHAMADAS</h4>
   <ul>
-    <!-- Usamos slice(1) para mostrar todos os itens, exceto o primeiro -->
-    <li *ngFor="let call of historyData.slice(1)">
+    <li *ngFor="let call of historyData.slice(showCurrent ? 1 : 0)">
       <div class="ticket-info">
         <div class="ticket">{{ call.ticket }}</div>
-
-        <!--
-          <<<<< ALTERAÇÃO IMPORTANTE AQUI >>>>>
-          Agora chamamos a função abbreviateName() para formatar o nome
-          de cada item do histórico.
-        -->
         <div class="name">{{ abbreviateName(call.name) }}</div>
-
       </div>
       <div class="desk-info">
         <div class="time">10:37</div>
