@@ -7,12 +7,12 @@
   font-family: sans-serif;
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
+  overflow: hidden; /* Evita barras de rolagem indesejadas */
   box-sizing: border-box;
 }
 
 /* =================================
-   CABEÇALHO SUPERIOR (FIXO)
+   CABEÇALHO SUPERIOR (continua fixo)
    ================================= */
 .app-header {
   position: fixed;
@@ -27,57 +27,63 @@
   justify-content: space-between;
   padding: 0 2rem;
   box-sizing: border-box;
-  z-index: 1500;
+  z-index: 1500; /* Garante que fique sempre por cima */
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-}
-
-/* CORREÇÃO PARA O LAYOUT DO LADO DIREITO DO CABEÇALHO */
 .header-right {
   display: flex;
   align-items: center;
-  gap: 1.5rem; /* Mantém o espaçamento entre os itens */
+  gap: 1.5rem;
 }
 
-/* Garante que o texto da data e da hora não seja "esmagado" */
 .header-right span,
 .header-right app-clock {
-  white-space: nowrap; /* Impede que o texto quebre para a linha de baixo */
-  flex-shrink: 0;      /* Impede que o elemento encolha */
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .header-logo {
-  height: 30px; /* Ajustei a altura para um visual mais equilibrado */
-  width: auto;
+  height: 30px;
 }
 
 /* =================================
    LAYOUT PRINCIPAL COM FLEXBOX
    ================================= */
 main {
+  /* Ativa o Flexbox para alinhar os painéis lado a lado */
   display: flex;
+
+  /* Cria o espaço fixo entre os dois painéis */
   gap: 2rem;
+
+  /* Adiciona espaçamento ao redor e empurra o conteúdo para baixo do header */
   padding: calc(50px + 2rem) 2rem 2rem 2rem;
+
+  /* Garante que o container ocupe toda a altura da tela */
   height: 100%;
   box-sizing: border-box;
-  position: relative;
 }
 
 /* =================================
    PAINEL DE VIDEO (ESQUERDA) - FLUIDO
    ================================= */
 .green-frame {
+  /* A 'mágica': flex: 1 diz a este painel para crescer
+     e ocupar todo o espaço livre disponível. */
   flex: 1;
+
+  /* Previne que o painel encolha de forma estranha */
   min-width: 0;
+
+  /* Seus estilos visuais */
   background-color: #e5e7eb;
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
   padding: 1.5rem;
   display: flex;
   box-sizing: border-box;
+
+  /* Prepara o painel para a animação */
   transition: all 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
@@ -85,8 +91,13 @@ main {
    PAINEL DE CHAMADAS (DIREITA) - LARGURA FIXA
    ================================= */
 .calls-panel-wrapper {
+  /* Define uma largura fixa para este painel */
   width: 370px;
+
+  /* Impede que o painel encolha */
   flex-shrink: 0;
+
+  /* Seus estilos visuais */
   background-color: #FFFFFF;
   padding: 1.5rem;
   border-radius: 8px;
@@ -101,16 +112,23 @@ main {
    TELA DE CHAMADA (O RETÂNGULO PRETO)
    ================================= */
 app-call-display {
-  position: absolute;
+  position: fixed; /* Fica fixo em relação à tela */
   top: calc(50px + 2rem);
   left: 2rem;
   height: calc(100vh - 50px - 4rem);
-  width: calc(100% - 370px - 6rem);
-  background-color: #334155;
+  
+  /* A largura é calculada para preencher o espaço do vídeo */
+  width: calc(100vw - 370px - 6rem); /* tela - painel direito - espaçamentos */
+  
+  background-color: #212529; /* Cor escura */
   border-radius: 8px;
+  
+  /* Começa invisível e por baixo de tudo */
   opacity: 0;
   pointer-events: none;
   z-index: 500;
+  
+  /* Animação suave de fade-in */
   transition: opacity 0.4s 0.2s ease-in-out;
 }
 
@@ -118,6 +136,7 @@ app-call-display {
    ANIMAÇÃO QUANDO A CHAMADA ESTÁ ATIVA
    ================================= */
 main.call-active .green-frame {
+  /* Durante a animação, o painel de vídeo fica fixo para se mover livremente */
   position: fixed;
   width: 370px;
   height: 208px;
@@ -125,20 +144,40 @@ main.call-active .green-frame {
   right: 2rem;
   left: auto;
   top: auto;
-  z-index: 1100;
+  z-index: 1100; /* Garante que o vídeo fique por cima */
 }
 
+/* O seletor ~ encontra o app-call-display que é irmão do main */
 main.call-active ~ app-call-display {
+  /* Torna o retângulo preto visível */
   opacity: 1;
   pointer-events: auto;
 }
 
 /* =================================
-   ESTILOS INTERNOS E OUTROS
+   ESTILOS INTERNOS (sem alterações)
    ================================= */
-.video-container-wrapper, .video-container, app-video-player, :host ::ng-deep app-video-player iframe {
+.video-container-wrapper {
   width: 100%;
   height: 100%;
+  background-color: #e5e7eb;
+  padding: 1rem;
+  border-radius: 6px;
+  box-sizing: border-box;
+  box-shadow: inset 0 -3px 4px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.video-container, app-video-player {
+  width: 99%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-0.5%);
 }
 .simulation-button {
   position: fixed;
@@ -147,5 +186,10 @@ main.call-active ~ app-call-display {
   z-index: 2000;
   padding: 10px 20px;
   font-size: 16px;
+}
+:host ::ng-deep app-video-player iframe {
+  width: 100%;
+  height: 100%;
+  transform: scale(1.01);
 }
 
