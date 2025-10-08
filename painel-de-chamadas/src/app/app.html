@@ -1,18 +1,20 @@
-<!-- CABEÇALHO -->
+<!-- =================== CABEÇALHO =================== -->
 <div class="app-header">
   <div class="header-left">
-    <span>CLINICA VALIDAÇÕES - JFS (MATRIZ)</span>
+    <span>CLÍNICA VALIDAÇÕES - JFS (MATRIZ)</span>
   </div>
+
   <div class="header-right">
     <span>{{ currentDate }}</span>
     <app-clock></app-clock>
-    <img src="assets/logo.svg" alt="Logo" class="header-logo">
+    <img src="assets/logo.svg" alt="Logo" class="header-logo" />
   </div>
 </div>
 
-<!-- CONTEÚDO PRINCIPAL -->
+<!-- =================== CONTEÚDO PRINCIPAL =================== -->
 <main [class.call-active]="isCallActive">
-  <!-- Painel de Vídeo (Estado normal) -->
+
+  <!-- Tela normal (quando não há chamada ativa) -->
   <div class="green-frame" *ngIf="!isCallActive">
     <div class="video-container-wrapper">
       <div class="video-container">
@@ -21,34 +23,82 @@
     </div>
   </div>
 
-  <!-- Painel de Chamadas (Estado normal) -->
+  <!-- Painel de chamadas -->
   <div class="calls-panel-wrapper" *ngIf="!isCallActive">
-    <app-call-history [historyData]="callHistory"></app-call-history>
-  </div>
+    <!-- Título do painel -->
+    <div class="calls-title">CHAMADAS</div>
+    <!-- Subtítulo -->
+    <div class="calls-subtitle">Senha atual</div>
 
-  <!-- Segunda Tela: retângulo preto + container direito -->
-  <div class="call-active-layout" *ngIf="isCallActive">
-    <!-- Retângulo preto -->
-    <app-call-display [callData]="currentCall"></app-call-display>
-
-    <!-- Container branco à direita -->
-    <div class="floating-call-container">
-      <div class="calls-history-only">
-        <app-call-history [historyData]="callHistory" [showCurrent]="false"></app-call-history>
-      </div>
-
-      <div class="video-preview">
-        <div class="video-container-wrapper">
-          <div class="video-container">
-            <app-video-player></app-video-player>
-          </div>
-        </div>
-      </div>
+    <!-- Retângulo azul da senha atual -->
+  <div class="current-call-box" *ngIf="callHistory.length > 0">
+    <div class="call-left">
+      <div class="call-code">{{ callHistory[0].ticket }}</div>
+      <div class="call-name">{{ callHistory[0].name }}</div>
+    </div>
+    <div class="call-right">
+      <!-- Hora acima do guichê -->
+      <div class="call-desk">{{ callHistory[0].desk }}</div>
     </div>
   </div>
+
+
+    <!-- Frase HISTÓRICO DE CHAMADAS -->
+  <div class="calls-history-label">
+    HISTÓRICO DE CHAMADAS
+  </div>
+
+  <!-- Containers cinza para histórico de chamadas (chamadas anteriores) -->
+  <div *ngFor="let call of callHistory.slice(1)" class="history-call-box">
+    <div class="call-left">
+      <div class="call-code">{{ call.ticket }}</div>
+      <div class="call-name">{{ call.name }}</div>
+    </div>
+    <div class="call-right">
+      <!-- Hora acima do guichê -->
+      <div class="call-time">{{ call.time }}</div>
+      <div class="call-desk">{{ call.desk }}</div>
+    </div>
+  </div>
+
+  </div>
+
+  
+
+  <!-- Segunda Tela (quando há chamada ativa) -->
+  <div class="call-active-layout" *ngIf="isCallActive">
+        <app-call-display [callData]="currentCall"></app-call-display>
+
+            <div class="floating-call-container">
+                  <!-- Título do painel direito -->
+                        <div class="calls-title">HISTÓRICO GERAL</div>
+
+                              <!-- Containers cinza para histórico de chamadas -->
+                                    <div *ngFor="let call of callHistory" class="history-call-box">
+                                            <div class="call-left">
+                                                      <div class="call-code">{{ call.ticket }}</div>
+                                                                <div class="call-name">{{ call.name }}</div>
+                                                                        </div>
+                                                                                <div class="call-right">
+                                                                                          <!-- Hora acima do guichê -->
+                                                                                                    <div class="call-time">{{ call.time }}</div>
+                                                                                                              <div class="call-desk">{{ call.desk }}</div>
+                                                                                                                      </div>
+                                                                                                                            </div>
+
+                                                                                                                                  <div class="video-preview">
+                                                                                                                                          <div class="video-container-wrapper">
+                                                                                                                                                    <div class="video-container">
+                                                                                                                                                                <app-video-player></app-video-player>
+                                                                                                                                                                          </div>
+                                                                                                                                                                                  </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                              </div>
+
 </main>
 
-<!-- BOTÃO DE SIMULAÇÃO -->
+<!-- =================== BOTÃO =================== -->
 <button class="simulation-button" (click)="simulateNewCall()">
   Simular Nova Chamada
 </button>

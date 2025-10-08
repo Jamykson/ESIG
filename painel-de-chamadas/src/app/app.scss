@@ -1,6 +1,6 @@
-/* =================================
-   GLOBAIS E CABEÇALHO
-================================= */
+/* =========================================================
+   ESTILOS GLOBAIS E CABEÇALHO PRINCIPAL
+   ========================================================= */
 :host {
   display: block;
   background-color: #f3f4f6;
@@ -18,28 +18,12 @@
   width: 100%;
   height: 50px;
   background-color: #0a5750;
-  color: white;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
   z-index: 2000;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.header-left span {
-  white-space: nowrap;
-  font-weight: 500;
-}
-
-.header-logo {
-  height: 30px;
-  flex-shrink: 0;
 }
 
 .header-right {
@@ -48,22 +32,29 @@
   gap: 1.5rem;
 }
 
+.header-logo {
+  height: 30px;
+}
+
 .header-right span,
 .header-right app-clock {
   white-space: nowrap;
 }
 
+/* =========================================================
+   LAYOUT PRINCIPAL (O CONTAINER PAI)
+   ========================================================= */
 main {
   display: flex;
   gap: 2rem;
-  padding: calc(50px + 2rem) 2rem 2rem 2rem;
+  padding: calc(50px + 2rem) 2rem 2rem;
   height: 100%;
   box-sizing: border-box;
 }
 
-/* =================================
-   PAINEL DE VÍDEO (NORMAL)
-================================= */
+/* =========================================================
+   ESTADO NORMAL (QUANDO isCallActive É FALSO)
+   ========================================================= */
 .green-frame {
   flex: 1;
   min-width: 0;
@@ -72,50 +63,40 @@ main {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
   padding: 1.5rem;
   display: flex;
-  box-sizing: border-box;
-  transition: all 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-/* =================================
-   PAINEL DE CHAMADAS (NORMAL)
-================================= */
 .calls-panel-wrapper {
   width: 370px;
   flex-shrink: 0;
   background-color: #fff;
-  padding: 1.5rem;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  transition: all 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-/* =================================
-   Segunda Tela: Layout flexível
-================================= */
+/* =========================================================
+   ESTADO DE CHAMADA (QUANDO isCallActive É VERDADEIRO)
+   ========================================================= */
+
+/* <<< A PARTE CRUCIAL QUE FOI CORRIGIDA >>>
+   Este container agora é um simples item flex que ocupa 100% do espaço,
+   em vez de ser 'position: fixed'. */
 .call-active-layout {
   display: flex;
-  position: fixed;
-  top: calc(50px + 2rem);
-  left: 2rem;
-  right: 2rem;
-  height: calc(100vh - 50px - 4rem);
+  width: 100%;
+  height: 100%;
   gap: 2rem;
-  z-index: 1100;
 }
 
-/* Retângulo preto (senha) */
+/* Retângulo esquerdo (chamada atual) */
 .call-active-layout app-call-display {
-  flex: 1; /* ocupa todo o espaço restante */
+  flex: 1; /* ocupa o espaço restante */
   background-color: #334155;
   border-radius: 8px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  height: 100%;
 }
 
 /* Container branco à direita */
@@ -131,32 +112,16 @@ main {
   overflow: hidden;
 }
 
-/* Apenas histórico */
 .floating-call-container .calls-history-only {
   flex: 1;
   overflow-y: auto;
 }
 
-/* Miniatura de vídeo embaixo */
-.floating-call-container .video-preview {
-  background-color: transparent;
-  box-shadow: none;
-  border-radius: 0;
-  margin-top: 0;
-  height: auto;
-}
+/* =========================================================
+   ESTILOS COMPARTILHADOS E AJUSTES FINAIS
+   ========================================================= */
 
-.floating-call-container .video-container-wrapper,
-.floating-call-container .video-container {
-  background-color: transparent !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  border-radius: 0;
-}
-
-/* =================================
-   VÍDEO BASE
-================================= */
+/* Estilos base do vídeo */
 .video-container-wrapper {
   width: 100%;
   height: 100%;
@@ -169,20 +134,28 @@ main {
   align-items: center;
   justify-content: center;
 }
-.video-container, app-video-player {
+
+.video-container,
+app-video-player {
   width: 99%;
   aspect-ratio: 16 / 9;
-  overflow: hidden;
   border-radius: 4px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   transform: translateY(-0.5%);
 }
 
-/* =================================
-   BOTÃO DE SIMULAÇÃO
-================================= */
+/* Remove estilos extra do vídeo na segunda tela */
+.floating-call-container .video-container-wrapper,
+.floating-call-container .video-container {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Botão de simulação */
 .simulation-button {
   position: fixed;
   bottom: 20px;
@@ -192,16 +165,134 @@ main {
   font-size: 16px;
 }
 
-/* =================================
-   ANIMAÇÕES
-================================= */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* Ajuste para vídeos do iframe */
 :host ::ng-deep app-video-player iframe {
   width: 100%;
   height: 100%;
   transform: scale(1.01);
+}
+
+.calls-title {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: #000000;
+  text-transform: uppercase;
+}
+
+/* Subtítulo do painel */
+.calls-subtitle {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #334155;
+}
+
+/* =========================================================
+   RETÂNGULO AZUL COM A SENHA ATUAL
+   ========================================================= */
+.current-call-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2dd4bf; /* azul */
+  color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.current-call-box .call-left {
+  display: flex;
+  flex-direction: column;
+}
+
+//codigo
+.current-call-box .call-code {
+  font-size: 1.0rem;
+  font-weight: bold;
+}
+
+//nome
+.current-call-box .call-name {
+  font-size: 0.8rem;
+}
+
+.current-call-box .call-right {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.current-call-box .call-time,
+.history-call-box .call-time {
+  font-size: 0.75rem;
+  color: #000000; // cor clara sobre azul ou cinza
+  margin-bottom: 0.25rem;
+  text-align: right;
+}
+
+//Frase HISTORICO DE CHAMADAS
+.calls-history-label {
+  margin-top: 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #000000;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   CONTAINERS CINZA PARA HISTÓRICO DE CHAMADAS
+   ========================================================= */
+.history-call-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9fafb; /* cinza */
+  color: #000000;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.history-call-box .call-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.history-call-box .call-code {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.history-call-box .call-name {
+  font-size: 0.8rem;
+}
+
+.history-call-box .call-right {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Barra lateral cinza à esquerda dos containers de histórico */
+.history-call-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f3f4f6;
+  color: #000000;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+  position: relative; /* necessário para o pseudo-elemento */
+}
+
+.history-call-box::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px; /* largura da barra */
+  background-color: #c4c4c4; /* cor cinza escura */
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
