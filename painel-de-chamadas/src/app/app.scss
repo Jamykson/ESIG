@@ -101,7 +101,7 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #9ca3af; /* cinza no estado inicial */
+  background-color: #e5e7eb; /* cinza no estado inicial */
   transition: background-color 0.3s ease;
 }
 
@@ -332,9 +332,9 @@ main.call-active .calls-panel-wrapper {
 .video-animation-wrapper {
   /* Coordenadas para a posição grande DENTRO do .video-container-wrapper */
   top: calc(50px + 2rem + 1rem + 1rem); /* header + padding-main + padding-frame + padding-wrapper */
-  left: calc(2rem + 1rem + 1rem); /* padding-main + padding-frame + padding-wrapper */
-  width: calc(65% - 4rem - 2rem - 2rem); /* 65% da tela - gaps e paddings */
-  height: calc((65vw - 8rem) * 9 / 16); /* Calcula altura 16:9 baseada na largura */
+  left: calc(2.2rem + 1rem + 1rem); /* padding-main + padding-frame + padding-wrapper */
+  width: calc(62% - 4rem - 2rem - 2rem); /* 65% da tela - gaps e paddings */
+  height: calc((62vw - 8rem) * 9 / 16); /* Calcula altura 16:9 baseada na largura */
   border-radius: 6px;
 }
 
@@ -346,6 +346,7 @@ main.call-active .calls-panel-wrapper {
   width: calc(430px - 3rem); /* Largura do painel flutuante menos os paddings */
   height: calc((430px - 3rem) * 9 / 16); /* Proporção 16:9 */
   top: calc(100vh - ((430px - 3rem) * 9 / 16) - 1.5rem - 2rem); /* Alinha na base da tela */
-  left: calc(100vw - 430px - 2rem + 1.5rem); /* Alinha na coluna da direita */
+  left: calc(100vw - 430px - 2rem + 1.5rem - 28px); /* Alinha na coluna da direita */
   border-radius: 6px;
 }
+
