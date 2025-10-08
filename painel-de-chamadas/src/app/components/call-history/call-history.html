@@ -1,7 +1,7 @@
 <div class="call-history-container">
   <div *ngFor="let call of historyData" class="call-history-cell" [style.borderColor]="borderColor">
     <span class="ticket">{{ call.ticket }}</span>
-    <span class="name">{{ call.name }}</span>
+    <span class="name">{{ abbreviateName(call.name) }}</span>
     <span class="desk">{{ call.desk }}</span>
     <span class="specialty">{{ call.specialty }}</span>
   </div>

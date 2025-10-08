@@ -1,4 +1,3 @@
-<!-- =================== CABEÇALHO =================== -->
 <div class="app-header">
   <div class="header-left">
     <span>CLÍNICA VALIDAÇÕES - JFS (MATRIZ)</span>
@@ -11,10 +10,8 @@
   </div>
 </div>
 
-<!-- =================== CONTEÚDO PRINCIPAL =================== -->
 <main [class.call-active]="isCallActive">
 
-  <!-- Tela normal (quando não há chamada ativa) -->
   <div class="green-frame" *ngIf="!isCallActive">
     <div class="video-container-wrapper">
       <div class="video-container">
@@ -23,82 +20,77 @@
     </div>
   </div>
 
-  <!-- Painel de chamadas -->
   <div class="calls-panel-wrapper" *ngIf="!isCallActive">
-    <!-- Título do painel -->
     <div class="calls-title">CHAMADAS</div>
-    <!-- Subtítulo -->
-    <div class="calls-subtitle">Senha atual</div>
+    <div class="action-icons">
+      <i class="fas fa-volume-up" alt="Som"></i>
+      <i class="fas fa-expand" alt="Tela Cheia"></i>
+    </div>
+    <div class="calls-subtitle">SENHA ATUAL</div>
 
-    <!-- Retângulo azul da senha atual -->
-  <div class="current-call-box" *ngIf="callHistory.length > 0">
-    <div class="call-left">
-      <div class="call-code">{{ callHistory[0].ticket }}</div>
-      <div class="call-name">{{ callHistory[0].name }}</div>
+    <div class="current-call-box" *ngIf="callHistory.length > 0">
+      <div class="call-left">
+        <div class="call-code">{{ callHistory[0].ticket }}</div>
+        <div class="call-name">{{ abbreviateName(callHistory[0].name) }}</div>
+      </div>
+      <div class="call-right">
+        <div class="call-desk">{{ callHistory[0].desk }}</div>
+      </div>
     </div>
-    <div class="call-right">
-      <!-- Hora acima do guichê -->
-      <div class="call-desk">{{ callHistory[0].desk }}</div>
+
+    <div class="calls-history-label">
+      HISTÓRICO DE CHAMADAS
     </div>
+
+    <div *ngFor="let call of callHistory.slice(1)" 
+         class="history-call-box"
+         [class.active]="isCallActive">
+      <div class="call-left">
+        <div class="call-code">{{ call.ticket }}</div>
+        <div class="call-name">{{ abbreviateName(call.name) }}</div>
+      </div>
+      <div class="call-right">
+        <div class="call-time">{{ call.time }}</div>
+        <div class="call-desk">{{ call.desk }}</div>
+      </div>
+    </div>
+
   </div>
 
-
-    <!-- Frase HISTÓRICO DE CHAMADAS -->
-  <div class="calls-history-label">
-    HISTÓRICO DE CHAMADAS
-  </div>
-
-  <!-- Containers cinza para histórico de chamadas (chamadas anteriores) -->
-  <div *ngFor="let call of callHistory.slice(1)" class="history-call-box">
-    <div class="call-left">
-      <div class="call-code">{{ call.ticket }}</div>
-      <div class="call-name">{{ call.name }}</div>
-    </div>
-    <div class="call-right">
-      <!-- Hora acima do guichê -->
-      <div class="call-time">{{ call.time }}</div>
-      <div class="call-desk">{{ call.desk }}</div>
-    </div>
-  </div>
-
-  </div>
-
-  
-
-  <!-- Segunda Tela (quando há chamada ativa) -->
   <div class="call-active-layout" *ngIf="isCallActive">
-        <app-call-display [callData]="currentCall"></app-call-display>
+    <app-call-display [callData]="currentCall"></app-call-display>
 
-            <div class="floating-call-container">
-                  <!-- Título do painel direito -->
-                        <div class="calls-title">HISTÓRICO GERAL</div>
+    <div class="floating-call-container">
+      <div class="calls-title">HISTÓRICO GERAL</div>
 
-                              <!-- Containers cinza para histórico de chamadas -->
-                                    <div *ngFor="let call of callHistory" class="history-call-box">
-                                            <div class="call-left">
-                                                      <div class="call-code">{{ call.ticket }}</div>
-                                                                <div class="call-name">{{ call.name }}</div>
-                                                                        </div>
-                                                                                <div class="call-right">
-                                                                                          <!-- Hora acima do guichê -->
-                                                                                                    <div class="call-time">{{ call.time }}</div>
-                                                                                                              <div class="call-desk">{{ call.desk }}</div>
-                                                                                                                      </div>
-                                                                                                                            </div>
+      <div class="calls-history-only">
 
-                                                                                                                                  <div class="video-preview">
-                                                                                                                                          <div class="video-container-wrapper">
-                                                                                                                                                    <div class="video-container">
-                                                                                                                                                                <app-video-player></app-video-player>
-                                                                                                                                                                          </div>
-                                                                                                                                                                                  </div>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                              </div>
+        <div *ngFor="let call of callHistory" 
+             class="history-call-box"
+             [class.active]="isCallActive">
+          <div class="call-left">
+            <div class="call-code">{{ call.ticket }}</div>
+            <div class="call-name">{{ abbreviateName(call.name) }}</div>
+          </div>
+          <div class="call-right">
+            <div class="call-time">{{ call.time }}</div>
+            <div class="call-desk">{{ call.desk }}</div>
+          </div>
+        </div>
+
+      </div>
+      <div class="video-preview">
+        <div class="video-container-wrapper">
+          <div class="video-container">
+            <app-video-player></app-video-player>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </main>
 
-<!-- =================== BOTÃO =================== -->
 <button class="simulation-button" (click)="simulateNewCall()">
   Simular Nova Chamada
 </button>

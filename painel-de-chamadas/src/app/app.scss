@@ -1,17 +1,14 @@
 /* =========================================================
-   ESTILOS GLOBAIS E CABEÇALHO PRINCIPAL
+   BLOCO FINAL E DEFINITIVO PARA O CABEÇALHO
    ========================================================= */
-:host {
-  display: block;
-  background-color: #f3f4f6;
-  font-family: sans-serif;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  box-sizing: border-box;
-}
 
 .app-header {
+  /* Define o container principal */
+  display: flex;
+  align-items: center;
+  padding: 0 2rem; /* Espaçamento de 2rem (aprox. 32px) nas laterais */
+  
+  /* Propriedades fixas do cabeçalho */
   position: fixed;
   top: 0;
   left: 0;
@@ -19,26 +16,43 @@
   height: 50px;
   background-color: #0a5750;
   color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2rem;
   z-index: 2000;
+  box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+}
+
+.header-left {
+  /* Faz o lado esquerdo crescer e ocupar o espaço vago */
+  flex-grow: 1;
+  
+  /* As 3 linhas abaixo são o "limite" para o texto */
+  white-space: nowrap;     /* Impede que o texto quebre em duas linhas */
+  overflow: hidden;        /* Esconde o que passar do limite */
+  text-overflow: ellipsis; /* Adiciona "..." no final do texto cortado */
+    
+  /* Correção de flexbox que permite ao elemento encolher corretamente */
+  min-width: 0;
+  font-size: 0.9rem;
 }
 
 .header-right {
+  /* Define que o lado direito não deve crescer, apenas ocupar o espaço necessário */
+  flex-shrink: 0;
+  
+  /* Alinha os itens internos (data, relógio, logo) */
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-}
+  gap: 1rem;
+  
+  /* Adiciona um espaço para não colar no texto da esquerda */
+  padding-left: 1rem;
 
-.header-logo {
-  height: 30px;
+  /* A regra da logo PODE ficar aqui dentro, sem problemas */
+  .header-logo {
+    height: 30px; 
+  }
 }
-
-.header-right span,
-.header-right app-clock {
-  white-space: nowrap;
+.header-right span {
+  font-size: 0.8rem; /* <-- Tamanho da data */
 }
 
 /* =========================================================
@@ -99,23 +113,123 @@ main {
   display: flex;
 }
 
-/* Container branco à direita */
+/* Container branco à direita (o pai da lista) */
 .call-active-layout .floating-call-container {
   flex: 0 0 430px; /* largura fixa */
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: column; /* Organiza os filhos em coluna: Título, Lista, Vídeo */
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   padding: 1rem;
-  overflow: hidden;
+  overflow: hidden; /* Garante que nada "vaze" para fora */
 }
 
+/* A área que conterá a lista e terá a rolagem */
 .floating-call-container .calls-history-only {
-  flex: 1;
-  overflow-y: auto;
+  flex: 1; /* <-- ESSA É A MÁGICA! Faz esta área crescer e ocupar todo o espaço vertical livre */
+  overflow-y: auto; /* Adiciona a rolagem vertical APENAS QUANDO for necessário */
+  min-height: 0; /* Um truque de flexbox para garantir que a rolagem funcione corretamente */
+  padding-right: 8px; /* Um pequeno espaço para a barra de rolagem não colar no conteúdo */
 }
+
+/* =========================================================
+   NOVO FORMATO PARA HISTÓRICO DE CHAMADAS (SOMBRA INTERNA CURVADA)
+   ========================================================= */
+
+/* 1. O CONTAINER PRINCIPAL */
+.history-call-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9fafb; /* Um cinza bem claro, quase branco, para o card */
+  color: #000;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  position: relative;
+  overflow: hidden; /* Essencial para que a curva funcione */
+  border: 1px solid #e5e7eb; /* Adiciona uma borda sutil */
+  /* Padding aumentado na esquerda para dar espaço ao novo efeito */
+  padding: 12px 16px 12px 50px; 
+}
+
+/* 2. A ÁREA DA SOMBRA (O EFEITO PRINCIPAL) */
+.history-call-box::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 40px; /* Largura da área do efeito */
+  background-color: #eef2f6; /* Tom de cinza um pouco mais escuro para a área */
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  /* A sombra interna que cria a profundidade */
+  box-shadow: inset -4px 0px 5px -3px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
+/* 4. ESTADO ATIVO: MUDA A COR DO EFEITO */
+.history-call-box.active::before {
+  background-color: #cceeee; /* Um tom de azul/verde bem claro */
+  box-shadow: inset -4px 0px 5px -3px rgba(45, 212, 191, 0.3); /* Sombra colorida */
+}
+/* O cortador também precisa mudar de cor quando o fundo do card mudar */
+.history-call-box.active::after {
+    /* Se o fundo do card mudasse no estado ativo, essa cor teria que ser a mesma */
+    background-color: #f9fafb; 
+}
+
+/* Garante que o texto fique sempre na frente */
+.history-call-box .call-left,
+.history-call-box .call-right {
+    position: relative;
+    z-index: 1; /* Apenas para garantir que fique acima dos pseudo-elementos */
+}
+
+/* Fontes dentro do histórico */
+.history-call-box .call-code {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.history-call-box .call-name {
+  font-size: 0.6rem;
+}
+
+.history-call-box .call-right {
+  font-size: 0.6rem;
+  font-weight: bold;
+}
+
+/* =========================================================
+   ÍCONES NO CANTO SUPERIOR DIREITO
+   ========================================================= */
+.action-icons {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.action-icons i {
+  font-size: 20px;  /* Aumentei o tamanho dos ícones */
+  color: #333;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.action-icons i:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+
 
 /* =========================================================
    ESTILOS COMPARTILHADOS E AJUSTES FINAIS
@@ -174,7 +288,7 @@ app-video-player {
 
 .calls-title {
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.85rem;
   margin-bottom: 0.75rem;
   color: #000000;
   text-transform: uppercase;
@@ -182,9 +296,10 @@ app-video-player {
 
 /* Subtítulo do painel */
 .calls-subtitle {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   margin-bottom: 0.5rem;
-  color: #334155;
+  color: #606875;
+  font-weight: bold;
 }
 
 /* =========================================================
@@ -208,13 +323,13 @@ app-video-player {
 
 //codigo
 .current-call-box .call-code {
-  font-size: 1.0rem;
+  font-size: 1.1rem;
   font-weight: bold;
 }
 
 //nome
 .current-call-box .call-name {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 }
 
 .current-call-box .call-right {
@@ -232,10 +347,11 @@ app-video-player {
 
 //Frase HISTORICO DE CHAMADAS
 .calls-history-label {
-  margin-top: 1rem;
-  font-weight: 600;
-  font-size: 1rem;
-  color: #000000;
+  margin-top: 0.45rem;
+  margin-bottom: 0.6rem;
+  font-weight: bold;
+  font-size: 0.75rem;
+  color: #606875;
   text-transform: uppercase;
 }
 
@@ -259,40 +375,79 @@ app-video-player {
 }
 
 .history-call-box .call-code {
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: bold;
 }
 
 .history-call-box .call-name {
-  font-size: 0.8rem;
+  font-size: 0.6rem;
 }
 
 .history-call-box .call-right {
-  font-size: 1rem;
+  font-size: 0.6rem;
   font-weight: bold;
 }
 
-/* Barra lateral cinza à esquerda dos containers de histórico */
+/* Containers cinza do histórico */
 .history-call-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #f3f4f6;
-  color: #000000;
-  padding: 0.8rem;
-  border-radius: 8px;
+  color: #000;
+  padding: 0.8rem 1rem;
+  border-radius: 12px; /* mantém o arredondamento do container */
   margin-bottom: 0.75rem;
-  position: relative; /* necessário para o pseudo-elemento */
+  position: relative;
+  overflow: hidden; /* faz o detalhe seguir a curvatura */
 }
 
+/* Detalhe cinza à esquerda com cantos arredondados */
 .history-call-box::before {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
-  bottom: 0;
-  width: 4px; /* largura da barra */
-  background-color: #c4c4c4; /* cor cinza escura */
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+  width: 3px; /* espessura da faixa */
+  height: 100%;
+  background-color: #d1d5db; /* tom de cinza */
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+  box-shadow: inset -1px 0 1px rgba(0, 0, 0, 0.08); /* leve profundidade */
 }
+
+/* Quando estiver ativa a chamada, muda a faixa lateral para azul */
+.history-call-box.active::before {
+  background-color: rgb(45, 212, 191); /* Azul claro */
+}
+
+/* ===================== ÍCONES NO TOPO DIREITO ===================== */
+.action-icons {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  z-index: 10;
+}
+
+.action-icons i {
+  font-size: 12px;
+  color: #333;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.action-icons i:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Garante que o container tenha posição relativa */
+.calls-panel-wrapper,
+.floating-call-container {
+  position: relative;
+}
+
+

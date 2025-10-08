@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
     'ANA BEATRIZ OLIVEIRA',
     'LUCAS CIRILO MENDES'
   ];
-  private mockDesks = ['Guichê 01', 'Guichê 02', 'Guichê 03'];
+  private mockDesks = ['Guichê 1', 'Guichê 2', 'Guichê 3'];
   private mockSpecialties = ['Clínico Geral', 'Cardiologia', 'Ortopedia', 'Pediatria'];
 
   /** Prefixos e contadores por especialidade */
@@ -55,14 +55,17 @@ export class AppComponent implements OnInit {
   constructor(private datePipe: DatePipe) {}
 
   ngOnInit(): void {
-    // Define a data formatada
-    this.currentDate = this.datePipe.transform(new Date(), "EEEE, d 'de' MMMM", 'pt-BR');
+    // =====> CÓDIGO DA DATA ATUALIZADO AQUI <=====
+    // Pega a data formatada em minúsculas
+    const formattedDate = this.datePipe.transform(new Date(), "EEEE, d 'de' MMMM", 'pt-BR');
+    // Aplica nossa função de capitalização e salva na variável que vai para a tela
+    this.currentDate = this.capitalizeDateString(formattedDate || '');
 
     // Inicializa com uma chamada exemplo
     const initialCall: Call = {
       ticket: 'CG-001N',
       name: 'ANA BEATRIZ OLIVEIRA',
-      desk: 'Guichê 01',
+      desk: 'Guichê 1',
       specialty: 'Clínico Geral',
       time: this.getCurrentTime()
     };
@@ -88,19 +91,63 @@ export class AppComponent implements OnInit {
       name, 
       desk, 
       specialty,
-      time: this.getCurrentTime() // adiciona hora da chamada
+      time: this.getCurrentTime()
     };
 
     // Atualiza estado
     this.currentCall = newCall;
     this.callHistory.unshift(this.currentCall);
-    if (this.callHistory.length > 5) this.callHistory.pop(); // Mantém histórico curto
+    if (this.callHistory.length > 5) this.callHistory.pop();
 
     this.isCallActive = true;
 
     // Chamada dura 15 segundos
     clearTimeout(this.callTimeout);
     this.callTimeout = setTimeout(() => (this.isCallActive = false), 15000);
+  }
+  
+  /**
+   * Abrevia um nome completo para o formato "I. Nome".
+   * @param fullName O nome completo a ser abreviado.
+   * @returns O nome abreviado.
+   */
+  public abbreviateName(fullName: string | null | undefined): string {
+    if (!fullName) {
+      return '';
+    }
+    const names = fullName.trim().split(' ');
+    if (names.length <= 1) {
+      return fullName;
+    }
+    const firstInitial = names[0].charAt(0).toUpperCase();
+    const secondName = names[1];
+    return `${firstInitial}. ${secondName}`;
+  }
+
+  // =====> NOVA FUNÇÃO ADICIONADA AQUI <=====
+  /**
+   * Capitaliza a primeira letra do dia da semana e do mês em uma string de data.
+   * Também capitaliza o 'F' de '-Feira'.
+   * @param dateString A string de data formatada (ex: 'quarta-feira, 8 de outubro').
+   * @returns A string de data com as letras maiúsculas ajustadas.
+   */
+  private capitalizeDateString(dateString: string): string {
+    if (!dateString) {
+      return '';
+    }
+    // Divide a string em palavras
+    return dateString.split(' ').map(word => {
+      // Se a palavra for 'de', não faz nada
+      if (['de'].includes(word)) {
+        return word;
+      }
+      // Se for um dia da semana (contém '-'), capitaliza ambas as partes
+      if (word.includes('-')) {
+        return word.split('-').map(part => part.charAt(0).toUpperCase() + part.slice(1)).join('-');
+      }
+      // Para as outras palavras (como o mês), capitaliza apenas a primeira letra
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }).join(' ');
   }
 
   /** Retorna hora atual no formato HH:mm */
