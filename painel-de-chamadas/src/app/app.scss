@@ -1,14 +1,35 @@
 /* =========================================================
-   BLOCO FINAL E DEFINITIVO PARA O CABEÇALHO
+   ESTILOS GLOBAIS E LAYOUT PRINCIPAL
+   ========================================================= */
+
+:host {
+  display: block;
+  background-color: #f3f4f6;
+  font-family: sans-serif;
+  min-height: 100vh;
+  min-width: 100vw;
+  box-sizing: border-box;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 65fr 35fr;
+  align-items: stretch; /* Garante que as duas colunas tenham a mesma altura */
+  padding: calc(50px + 2rem) 2rem 2rem; /* 50px do header + 2rem de respiro */
+  gap: 2rem;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   CABEÇALHO SUPERIOR
    ========================================================= */
 
 .app-header {
-  /* Define o container principal */
   display: flex;
   align-items: center;
-  padding: 0 2rem; /* Espaçamento de 2rem (aprox. 32px) nas laterais */
-  
-  /* Propriedades fixas do cabeçalho */
+  justify-content: space-between;
+  padding: 0 2rem;
   position: fixed;
   top: 0;
   left: 0;
@@ -17,87 +38,81 @@
   background-color: #0a5750;
   color: #fff;
   z-index: 2000;
-  box-sizing: border-box; /* Garante que o padding não aumente a largura total */
-}
-
-.header-left {
-  /* Faz o lado esquerdo crescer e ocupar o espaço vago */
-  flex-grow: 1;
-  
-  /* As 3 linhas abaixo são o "limite" para o texto */
-  white-space: nowrap;     /* Impede que o texto quebre em duas linhas */
-  overflow: hidden;        /* Esconde o que passar do limite */
-  text-overflow: ellipsis; /* Adiciona "..." no final do texto cortado */
-    
-  /* Correção de flexbox que permite ao elemento encolher corretamente */
-  min-width: 0;
-  font-size: 0.9rem;
-}
-
-.header-right {
-  /* Define que o lado direito não deve crescer, apenas ocupar o espaço necessário */
-  flex-shrink: 0;
-  
-  /* Alinha os itens internos (data, relógio, logo) */
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  
-  /* Adiciona um espaço para não colar no texto da esquerda */
-  padding-left: 1rem;
-
-  /* A regra da logo PODE ficar aqui dentro, sem problemas */
-  .header-logo {
-    height: 30px; 
-  }
-}
-.header-right span {
-  font-size: 0.8rem; /* <-- Tamanho da data */
-}
-
-/* =========================================================
-   LAYOUT PRINCIPAL (O CONTAINER PAI)
-   ========================================================= */
-main {
-  display: flex;
-  gap: 2rem;
-  padding: calc(50px + 2rem) 2rem 2rem;
-  height: 100%;
   box-sizing: border-box;
 }
 
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.header-logo {
+  height: 30px;
+}
+
 /* =========================================================
-   ESTADO NORMAL (QUANDO isCallActive É FALSO)
+   ESTADO NORMAL (QUANDO isCallActive é FALSO)
    ========================================================= */
+
+/* Moldura externa do vídeo */
 .green-frame {
-  flex: 1;
-  min-width: 0;
   background-color: #e5e7eb;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.16);
-  padding: 1.5rem;
+;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   display: flex;
 }
 
+/* Container interno do vídeo */
+.video-container-wrapper {
+  background-color: #e5e7eb;
+  box-shadow: 0 12px 24px -6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+/* O Player de Vídeo */
+.video-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+/* Painel de chamadas da direita */
 .calls-panel-wrapper {
-  width: 370px;
-  flex-shrink: 0;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  position: relative; /* Essencial para o posicionamento dos ícones */
+  overflow-y: auto; /* Adiciona rolagem ao painel inteiro se necessário */
 }
 
 /* =========================================================
-   ESTADO DE CHAMADA (QUANDO isCallActive É VERDADEIRO)
+   ESTADO DE CHAMADA (QUANDO isCallActive é VERDADEIRO)
    ========================================================= */
 
-/* <<< A PARTE CRUCIAL QUE FOI CORRIGIDA >>>
-   Este container agora é um simples item flex que ocupa 100% do espaço,
-   em vez de ser 'position: fixed'. */
+/* Transforma o 'main' em um container flex de tela cheia */
+main.call-active {
+  display: flex;
+}
+
+/* Oculta os elementos do estado normal */
+main.call-active .green-frame,
+main.call-active .calls-panel-wrapper {
+  display: none;
+}
+
+/* Container principal do estado de chamada */
 .call-active-layout {
   display: flex;
   width: 100%;
@@ -111,162 +126,153 @@ main {
   background-color: #334155;
   border-radius: 8px;
   display: flex;
+  color: white;
 }
 
-/* Container branco à direita (o pai da lista) */
-.call-active-layout .floating-call-container {
-  flex: 0 0 430px; /* largura fixa */
+/* Container branco à direita */
+.floating-call-container {
+  width: 430px; /* largura fixa */
+  flex-shrink: 0;
   display: flex;
-  flex-direction: column; /* Organiza os filhos em coluna: Título, Lista, Vídeo */
+  flex-direction: column;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  padding: 1rem;
-  overflow: hidden; /* Garante que nada "vaze" para fora */
+  padding: 1.5rem;
+  overflow: hidden;
+  position: relative; /* Essencial para os ícones */
 }
 
 /* A área que conterá a lista e terá a rolagem */
-.floating-call-container .calls-history-only {
-  flex: 1; /* <-- ESSA É A MÁGICA! Faz esta área crescer e ocupar todo o espaço vertical livre */
-  overflow-y: auto; /* Adiciona a rolagem vertical APENAS QUANDO for necessário */
-  min-height: 0; /* Um truque de flexbox para garantir que a rolagem funcione corretamente */
-  padding-right: 8px; /* Um pequeno espaço para a barra de rolagem não colar no conteúdo */
+.calls-history-only {
+  flex-grow: 1; /* Faz esta área crescer e ocupar todo o espaço vertical livre */
+  overflow-y: auto; /* Adiciona a rolagem vertical APENAS QUANDO necessário */
+  min-height: 0; /* Truque para a rolagem funcionar em flexbox */
+  padding-right: 8px; /* Espaço para a barra de rolagem */
+}
+
+/* Preview do vídeo no estado de chamada */
+.video-preview {
+  margin-top: 1rem;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.video-preview .video-container-wrapper {
+  padding: 0;
+  background: black;
 }
 
 /* =========================================================
-   NOVO FORMATO PARA HISTÓRICO DE CHAMADAS (SOMBRA INTERNA CURVADA)
+   ESTILOS COMPARTILHADOS (TÍTULOS, CARDS, ÍCONES, etc.)
    ========================================================= */
 
-/* 1. O CONTAINER PRINCIPAL */
+.calls-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  color: #343a40;
+}
+
+.calls-subtitle, .calls-history-label {
+  font-size: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #6c757d;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Card da chamada atual (azul-petróleo) */
+.current-call-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #14b8a6;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+}
+
+.current-call-box .call-code {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.current-call-box .call-name {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.current-call-box .call-right .call-desk {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* Cards cinzas do histórico */
 .history-call-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f9fafb; /* Um cinza bem claro, quase branco, para o card */
+  background-color: #f8f9fa;
   color: #000;
-  border-radius: 12px;
-  margin-bottom: 0.75rem;
+  padding: 0.75rem 1rem 0.75rem 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
   position: relative;
-  overflow: hidden; /* Essencial para que a curva funcione */
-  border: 1px solid #e5e7eb; /* Adiciona uma borda sutil */
-  /* Padding aumentado na esquerda para dar espaço ao novo efeito */
-  padding: 12px 16px 12px 50px; 
+  overflow: hidden;
 }
 
-/* 2. A ÁREA DA SOMBRA (O EFEITO PRINCIPAL) */
+.history-call-box .call-code {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.history-call-box .call-name {
+  font-size: 0.7rem;
+  color: #6c757d;
+}
+
+.history-call-box .call-right {
+  text-align: right;
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.history-call-box .call-right .call-desk {
+  font-weight: 700;
+  color: #343a40;
+}
+
+/* Detalhe lateral dos cards do histórico */
 .history-call-box::before {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
+  width: 3px;
   height: 100%;
-  width: 40px; /* Largura da área do efeito */
-  background-color: #eef2f6; /* Tom de cinza um pouco mais escuro para a área */
+  background-color: #d1d5db;
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
-  /* A sombra interna que cria a profundidade */
-  box-shadow: inset -4px 0px 5px -3px rgba(0, 0, 0, 0.15);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: inset -1px 0 1px rgba(0, 0, 0, 0.08);
 }
 
-
-
-/* 4. ESTADO ATIVO: MUDA A COR DO EFEITO */
 .history-call-box.active::before {
-  background-color: #cceeee; /* Um tom de azul/verde bem claro */
-  box-shadow: inset -4px 0px 5px -3px rgba(45, 212, 191, 0.3); /* Sombra colorida */
-}
-/* O cortador também precisa mudar de cor quando o fundo do card mudar */
-.history-call-box.active::after {
-    /* Se o fundo do card mudasse no estado ativo, essa cor teria que ser a mesma */
-    background-color: #f9fafb; 
+  background-color: rgb(45, 212, 191);
 }
 
-/* Garante que o texto fique sempre na frente */
-.history-call-box .call-left,
-.history-call-box .call-right {
-    position: relative;
-    z-index: 1; /* Apenas para garantir que fique acima dos pseudo-elementos */
-}
-
-/* Fontes dentro do histórico */
-.history-call-box .call-code {
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-
-.history-call-box .call-name {
-  font-size: 0.6rem;
-}
-
-.history-call-box .call-right {
-  font-size: 0.6rem;
-  font-weight: bold;
-}
-
-/* =========================================================
-   ÍCONES NO CANTO SUPERIOR DIREITO
-   ========================================================= */
+/* Ícones no canto superior direito */
 .action-icons {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 1.5rem;
+  right: 1.5rem;
   display: flex;
-  gap: 1rem;
-  z-index: 10;
-}
-
-.action-icons i {
-  font-size: 20px;  /* Aumentei o tamanho dos ícones */
-  color: #333;
-  cursor: pointer;
-  opacity: 0.8;
-  transition: opacity 0.2s, transform 0.2s;
-}
-
-.action-icons i:hover {
-  opacity: 1;
-  transform: scale(1.1);
-}
-
-
-
-/* =========================================================
-   ESTILOS COMPARTILHADOS E AJUSTES FINAIS
-   ========================================================= */
-
-/* Estilos base do vídeo */
-.video-container-wrapper {
-  width: 100%;
-  height: 100%;
-  background-color: #e5e7eb;
-  padding: 1rem;
-  border-radius: 6px;
-  box-sizing: border-box;
-  box-shadow: inset 0 -3px 4px rgba(0,0,0,0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.video-container,
-app-video-player {
-  width: 99%;
-  aspect-ratio: 16 / 9;
-  border-radius: 4px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translateY(-0.5%);
-}
-
-/* Remove estilos extra do vídeo na segunda tela */
-.floating-call-container .video-container-wrapper,
-.floating-call-container .video-container {
-  background-color: transparent !important;
-  box-shadow: none !important;
-  padding: 0 !important;
+  gap: 0.75rem;
+  color: #6c757d;
+  font-size: 1.2rem;
 }
 
 /* Botão de simulação */
@@ -278,176 +284,3 @@ app-video-player {
   padding: 10px 20px;
   font-size: 16px;
 }
-
-/* Ajuste para vídeos do iframe */
-:host ::ng-deep app-video-player iframe {
-  width: 100%;
-  height: 100%;
-  transform: scale(1.01);
-}
-
-.calls-title {
-  font-weight: 600;
-  font-size: 0.85rem;
-  margin-bottom: 0.75rem;
-  color: #000000;
-  text-transform: uppercase;
-}
-
-/* Subtítulo do painel */
-.calls-subtitle {
-  font-size: 0.8rem;
-  margin-bottom: 0.5rem;
-  color: #606875;
-  font-weight: bold;
-}
-
-/* =========================================================
-   RETÂNGULO AZUL COM A SENHA ATUAL
-   ========================================================= */
-.current-call-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #2dd4bf; /* azul */
-  color: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-.current-call-box .call-left {
-  display: flex;
-  flex-direction: column;
-}
-
-//codigo
-.current-call-box .call-code {
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-//nome
-.current-call-box .call-name {
-  font-size: 0.7rem;
-}
-
-.current-call-box .call-right {
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.current-call-box .call-time,
-.history-call-box .call-time {
-  font-size: 0.75rem;
-  color: #000000; // cor clara sobre azul ou cinza
-  margin-bottom: 0.25rem;
-  text-align: right;
-}
-
-//Frase HISTORICO DE CHAMADAS
-.calls-history-label {
-  margin-top: 0.45rem;
-  margin-bottom: 0.6rem;
-  font-weight: bold;
-  font-size: 0.75rem;
-  color: #606875;
-  text-transform: uppercase;
-}
-
-/* =========================================================
-   CONTAINERS CINZA PARA HISTÓRICO DE CHAMADAS
-   ========================================================= */
-.history-call-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f9fafb; /* cinza */
-  color: #000000;
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 0.75rem;
-}
-
-.history-call-box .call-left {
-  display: flex;
-  flex-direction: column;
-}
-
-.history-call-box .call-code {
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-
-.history-call-box .call-name {
-  font-size: 0.6rem;
-}
-
-.history-call-box .call-right {
-  font-size: 0.6rem;
-  font-weight: bold;
-}
-
-/* Containers cinza do histórico */
-.history-call-box {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f3f4f6;
-  color: #000;
-  padding: 0.8rem 1rem;
-  border-radius: 12px; /* mantém o arredondamento do container */
-  margin-bottom: 0.75rem;
-  position: relative;
-  overflow: hidden; /* faz o detalhe seguir a curvatura */
-}
-
-/* Detalhe cinza à esquerda com cantos arredondados */
-.history-call-box::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 3px; /* espessura da faixa */
-  height: 100%;
-  background-color: #d1d5db; /* tom de cinza */
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-  box-shadow: inset -1px 0 1px rgba(0, 0, 0, 0.08); /* leve profundidade */
-}
-
-/* Quando estiver ativa a chamada, muda a faixa lateral para azul */
-.history-call-box.active::before {
-  background-color: rgb(45, 212, 191); /* Azul claro */
-}
-
-/* ===================== ÍCONES NO TOPO DIREITO ===================== */
-.action-icons {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  display: flex;
-  gap: 0.75rem;
-  z-index: 10;
-}
-
-.action-icons i {
-  font-size: 12px;
-  color: #333;
-  cursor: pointer;
-  opacity: 0.8;
-  transition: opacity 0.2s, transform 0.2s;
-}
-
-.action-icons i:hover {
-  opacity: 1;
-  transform: scale(1.1);
-}
-
-/* Garante que o container tenha posição relativa */
-.calls-panel-wrapper,
-.floating-call-container {
-  position: relative;
-}
-
-

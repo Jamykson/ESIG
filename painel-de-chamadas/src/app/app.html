@@ -21,17 +21,17 @@
   </div>
 
   <div class="calls-panel-wrapper" *ngIf="!isCallActive">
-    <div class="calls-title">CHAMADAS</div>
     <div class="action-icons">
       <i class="fas fa-volume-up" alt="Som"></i>
       <i class="fas fa-expand" alt="Tela Cheia"></i>
     </div>
+    <div class="calls-title">CHAMADAS</div>
     <div class="calls-subtitle">SENHA ATUAL</div>
 
     <div class="current-call-box" *ngIf="callHistory.length > 0">
       <div class="call-left">
         <div class="call-code">{{ callHistory[0].ticket }}</div>
-        <div class="call-name">{{ abbreviateName(callHistory[0].name) }}</div>
+        <div class="call-name">{{ callHistory[0].name }}</div>
       </div>
       <div class="call-right">
         <div class="call-desk">{{ callHistory[0].desk }}</div>
@@ -47,7 +47,7 @@
          [class.active]="isCallActive">
       <div class="call-left">
         <div class="call-code">{{ call.ticket }}</div>
-        <div class="call-name">{{ abbreviateName(call.name) }}</div>
+        <div class="call-name">{{ call.name }}</div>
       </div>
       <div class="call-right">
         <div class="call-time">{{ call.time }}</div>
@@ -61,6 +61,12 @@
     <app-call-display [callData]="currentCall"></app-call-display>
 
     <div class="floating-call-container">
+      
+      <div class="action-icons">
+        <i class="fas fa-volume-up" alt="Som"></i>
+        <i class="fas fa-expand" alt="Tela Cheia"></i>
+      </div>
+
       <div class="calls-title">HISTÓRICO GERAL</div>
 
       <div class="calls-history-only">
@@ -70,7 +76,7 @@
              [class.active]="isCallActive">
           <div class="call-left">
             <div class="call-code">{{ call.ticket }}</div>
-            <div class="call-name">{{ abbreviateName(call.name) }}</div>
+            <div class="call-name">{{ call.name }}</div>
           </div>
           <div class="call-right">
             <div class="call-time">{{ call.time }}</div>

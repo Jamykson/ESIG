@@ -1,8 +1,34 @@
-<div class="call-history-container">
-  <div *ngFor="let call of historyData" class="call-history-cell" [style.borderColor]="borderColor">
-    <span class="ticket">{{ call.ticket }}</span>
-    <span class="name">{{ abbreviateName(call.name) }}</span>
-    <span class="desk">{{ call.desk }}</span>
-    <span class="specialty">{{ call.specialty }}</span>
+<div class="panel-header">
+  <h3 class="calls-title">CHAMADAS</h3>
+  <div class="panel-icons">
+    <span>🔊</span>
+    <span>🔲</span>
   </div>
+</div>
+
+<div class="current-call-section" *ngIf="historyData.length > 0">
+  <h4 class="calls-subtitle">SENHA ATUAL</h4>
+  <div class="current-call-box">
+    <div class="call-left">
+      <div class="call-code">{{ historyData[0].ticket }}</div>
+      <div class="call-name">{{ historyData[0].name }}</div>
+    </div>
+    <div class="call-right">{{ historyData[0].desk }}</div>
+  </div>
+</div>
+
+<h4 class="calls-history-label">HISTÓRICO DE CHAMADAS</h4>
+
+<div class="history-list-container">
+  <ul>
+    <li class="history-call-box" *ngFor="let call of historyData.slice(1)">
+      <div class="call-left">
+        <div class="call-code">{{ call.ticket }}</div>
+        <div class="call-name">{{ call.name }}</div>
+      </div>
+      <div class="call-right">
+        {{ call.desk }}
+      </div>
+    </li>
+  </ul>
 </div>
