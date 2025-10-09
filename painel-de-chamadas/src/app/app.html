@@ -35,7 +35,10 @@
       <div class="current-call-box" *ngIf="callHistory.length > 0">
           <div class="call-left">
               <div class="call-code">{{ callHistory[0].ticket }}</div>
-              <div class="call-name">{{ abbreviateName(callHistory[0].name) }}</div>
+              <div class="call-name">
+                  {{ abbreviateName(callHistory[0].name) }}
+                  <span>- {{ abbreviateSpecialty(callHistory[0].specialty) }}</span>
+              </div>
           </div>
           <div class="call-right">
               <div class="call-desk">{{ callHistory[0].desk }}</div>
@@ -44,16 +47,19 @@
 
 
       <div class="calls-history-label">HISTÓRICO DE CHAMADAS</div>
-  <div *ngFor="let call of callHistory.slice(1)" class="history-call-box">
-      <div class="call-left">
-          <div class="call-code">{{ call.ticket }}</div>
-          <div class="call-name">{{ abbreviateName(call.name) }}</div>
+      <div *ngFor="let call of callHistory.slice(1)" class="history-call-box">
+          <div class="call-left">
+              <div class="call-code">{{ call.ticket }}</div>
+              <div class="call-name">
+                  {{ abbreviateName(call.name) }}
+                  <span>- {{ abbreviateSpecialty(call.specialty) }}</span>
+              </div>
+          </div>
+          <div class="call-right">
+              <div class="call-time">{{ call.time }}</div>
+              <div class="call-desk">{{ call.desk }}</div>
+          </div>
       </div>
-      <div class="call-right">
-          <div class="call-time">{{ call.time }}</div>
-          <div class="call-desk">{{ call.desk }}</div>
-      </div>
-  </div>
     </div>
 
   </ng-container>
@@ -71,12 +77,13 @@
       <div class="calls-title">HISTÓRICO GERAL</div>
 
       <div class="calls-history-only">
-          <div *ngFor="let call of callHistory"
-              class="history-call-box"
-              [class.active]="isCallActive">
+          <div *ngFor="let call of callHistory" class="history-call-box" [class.active]="isCallActive">
               <div class="call-left">
                   <div class="call-code">{{ call.ticket }}</div>
-                  <div class="call-name">{{ abbreviateName(call.name) }}</div>
+                  <div class="call-name">
+                      {{ abbreviateName(call.name) }}
+                      <span>- {{ abbreviateSpecialty(call.specialty) }}</span>
+                  </div>
               </div>
               <div class="call-right">
                   <div class="call-time">{{ call.time }}</div>

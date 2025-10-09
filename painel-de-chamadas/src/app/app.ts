@@ -54,9 +54,12 @@ export class AppComponent implements OnInit {
   private ticketCounters = { CG: 1, CA: 1, OR: 1, PE: 1 };
 
   // ===================================================================
-  // ESTADO DA APLICAÇÃO
+  // CONFIGURAÇÃO & ESTADO DA APLICAÇÃO
   // ===================================================================
 
+  /** O ID do vídeo do YouTube a ser reproduzido. */
+  public youtubeVideoId = '1F--A5137-4';
+  
   /** A data atual formatada para exibição no cabeçalho. */
   public currentDate: string | null = '';
   /** Lista das últimas 5 chamadas. A mais recente está no índice 0. */
@@ -140,6 +143,26 @@ export class AppComponent implements OnInit {
     const firstInitial = names[0].charAt(0).toUpperCase();
     const secondName = names[1];
     return `${firstInitial}. ${secondName}`;
+  }
+
+  /**
+   * [NOVA FUNÇÃO]
+   * Abrevia o nome de uma especialidade.
+   * Ex: "Clínico Geral" -> "C. GERAL"
+   * @param specialty A especialidade completa.
+   * @returns A especialidade abreviada.
+   */
+  public abbreviateSpecialty(specialty: string | null | undefined): string {
+    if (!specialty) {
+      return '';
+    }
+    const words = specialty.trim().toUpperCase().split(' ');
+    if (words.length === 1) {
+      return specialty.toUpperCase();
+    }
+    const firstInitial = words[0].charAt(0);
+    const secondWord = words[1];
+    return `${firstInitial}. ${secondWord}`;
   }
 
 
