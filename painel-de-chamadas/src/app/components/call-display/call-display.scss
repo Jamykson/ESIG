@@ -49,14 +49,10 @@
   flex-direction: column;
   align-items: center;
 
-  /*
-    <<<<< ALTERE ESTA LINHA PARA ALINHAR NO TOPO >>>>>
-    'flex-start' alinha o conteúdo no início (topo) do container.
-  */
   justify-content: flex-start;
 
   width: 100%;
-  padding-top: 2rem; /* Este padding garante o espaçamento a partir do topo */
+  padding-top: 2rem; 
 }
 
 .ticket, .specialty, .name, .desk {
@@ -87,12 +83,6 @@
    ================================= */
 .desk {
   width: 100%;
-  
-  /*
-    <<<<< CORREÇÃO IMPORTANTE AQUI >>>>>
-    A diretiva !important força a aplicação da cor de fundo,
-    garantindo que o retângulo apareça.
-  */
   background-color: #2dd4bf !important;
   
   font-size: 3vw;

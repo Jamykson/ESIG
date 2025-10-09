@@ -1,14 +1,14 @@
-import { Component, Input } from '@angular/core'; // 1. IMPORTE o Input
-import { CommonModule } from '@angular/common'; // 2. IMPORTE o CommonModule para usar *ngIf
+import { Component, Input } from '@angular/core'; 
+import { CommonModule } from '@angular/common'; 
 
 @Component({
   selector: 'app-call-display',
-  standalone: true, // Componentes modernos são standalone
-  imports: [CommonModule], // 3. ADICIONE o CommonModule aqui
+  standalone: true, 
+  imports: [CommonModule], 
   templateUrl: './call-display.html',
   styleUrl: './call-display.scss'
 })
 export class CallDisplay {
-  // 4. DECLARE a propriedade que vai receber os dados
+  
   @Input() callData: any; 
 }

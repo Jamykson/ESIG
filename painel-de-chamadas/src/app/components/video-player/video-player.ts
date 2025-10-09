@@ -1,6 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
 
-// Declara a variável global 'YT' para o TypeScript não reclamar
 declare var YT: any;
 
 @Component({
@@ -30,7 +29,7 @@ export class VideoPlayer implements AfterViewInit {
         autoplay: 1,    // Autoplay
         controls: 0,    // Sem controles
         loop: 1,        // Loop
-        playlist: videoId // Para o loop funcionar, o ID precisa estar na playlist
+        playlist: videoId 
       },
       events: {
         'onReady': (event: any) => {

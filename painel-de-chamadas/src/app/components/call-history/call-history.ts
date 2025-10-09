@@ -1,7 +1,7 @@
-// Importe OnChanges e SimpleChanges
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// Interface para definir a estrutura de dados de uma chamada
 interface Call {
   ticket: string;
   name: string;
@@ -9,6 +9,11 @@ interface Call {
   specialty: string;
 }
 
+/**
+ * @Component CallHistory
+ * @description Um componente reutilizável para exibir uma lista de chamadas (histórico).
+ * Ele reage a mudanças nos dados recebidos do componente pai.
+ */
 @Component({
   selector: 'app-call-history',
   templateUrl: './call-history.html',
@@ -16,28 +21,48 @@ interface Call {
   standalone: true,
   imports: [CommonModule]
 })
-// Adicione 'implements OnChanges' aqui
 export class CallHistory implements OnChanges {
+
+  // ===================================================================
+  // PROPRIEDADES DE ENTRADA (INPUTS)
+  // ===================================================================
+
+  /**
+   * @Input historyData
+   * @description O array de objetos de chamada que será exibido.
+   * Recebido do componente pai.
+   */
   @Input() historyData: Call[] = [];
+
+  /**
+   * @Input showCurrent
+   * @description Flag para controlar se a chamada mais recente (atual)
+   * deve ter um destaque especial.
+   */
   @Input() showCurrent: boolean = true;
+
+  /**
+   * @Input borderColor
+   * @description Permite customizar a cor da borda do componente a partir do pai.
+   */
   @Input() borderColor: string = '#ccc';
 
-  // =====> NOVO CÓDIGO DE TESTE ADICIONADO AQUI <=====
-  ngOnChanges(changes: SimpleChanges) {
-    // Este código vai rodar toda vez que o 'historyData' for atualizado pelo componente pai
-    if (changes['historyData']) {
-      console.log('>>> O COMPONENTE CallHistory RECEBEU DADOS! <<<');
-      console.log(changes['historyData'].currentValue);
-    }
-  }
 
-  // A função de abreviar continua aqui, caso precisemos dela depois
-  public abbreviateName(fullName: string | null | undefined): string {
-    if (!fullName) { return ''; }
-    const names = fullName.trim().split(' ');
-    if (names.length <= 1) { return fullName; }
-    const firstInitial = names[0].charAt(0).toUpperCase();
-    const secondName = names[1];
-    return `${firstInitial}. ${secondName}`;
+  // ===================================================================
+  // CICLO DE VIDA (LIFECYCLE HOOKS)
+  // ===================================================================
+
+  /**
+   * Método do ciclo de vida do Angular que é executado sempre que um
+   * dos @Inputs do componente é alterado pelo componente pai.
+   * * @param changes Um objeto contendo as propriedades que mudaram.
+   */
+  ngOnChanges(changes: SimpleChanges): void {
+    // Verifica se a propriedade 'historyData' foi a que mudou
+    if (changes['historyData']) {
+      // Este bloco é útil para depuração (debug) ou para executar
+      // uma lógica específica sempre que o histórico for atualizado.
+      console.log('O histórico de chamadas foi atualizado:', changes['historyData'].currentValue);
+    }
   }
 }

@@ -16,44 +16,51 @@
 
 <main [class.call-active]="isCallActive">
 
-  <div class="video-card-frame" *ngIf="!isCallActive">
-  <div class="video-container" [class.active]="isCallActive">
-    <div class="video-background"></div>
-  </div>
-</div>
+  <ng-container *ngIf="!isCallActive">
 
-
-
-  <div class="calls-panel-wrapper" *ngIf="!isCallActive">
-    <div class="action-icons">
-      <i class="fas fa-volume-up" alt="Som"></i>
-      <i class="fas fa-expand" alt="Tela Cheia"></i>
+    <div class="video-card-frame">
+      <div class="video-container">
+        <div class="video-background"></div>
+      </div>
     </div>
-    <div class="calls-title">CHAMADAS</div>
-    <div class="calls-subtitle">SENHA ATUAL</div>
-    <div class="current-call-box" *ngIf="callHistory.length > 0">
+
+    <div class="calls-panel-wrapper">
+      <div class="action-icons">
+        <i class="fas fa-volume-up" alt="Som"></i>
+        <i class="fas fa-expand" alt="Tela Cheia"></i>
+      </div>
+      <div class="calls-title">CHAMADAS</div>
+      <div class="calls-subtitle">SENHA ATUAL</div>
+
+      <div class="current-call-box" *ngIf="callHistory.length > 0">
+          <div class="call-left">
+              <div class="call-code">{{ callHistory[0].ticket }}</div>
+              <div class="call-name">{{ abbreviateName(callHistory[0].name) }}</div>
+          </div>
+          <div class="call-right">
+              <div class="call-desk">{{ callHistory[0].desk }}</div>
+          </div>
+      </div>
+
+
+      <div class="calls-history-label">HISTÓRICO DE CHAMADAS</div>
+  <div *ngFor="let call of callHistory.slice(1)" class="history-call-box">
       <div class="call-left">
-        <div class="call-code">{{ callHistory[0].ticket }}</div>
-        <div class="call-name">{{ callHistory[0].name }}</div>
+          <div class="call-code">{{ call.ticket }}</div>
+          <div class="call-name">{{ abbreviateName(call.name) }}</div>
       </div>
       <div class="call-right">
-        <div class="call-desk">{{ callHistory[0].desk }}</div>
+          <div class="call-time">{{ call.time }}</div>
+          <div class="call-desk">{{ call.desk }}</div>
       </div>
-    </div>
-    <div class="calls-history-label">HISTÓRICO DE CHAMADAS</div>
-    <div *ngFor="let call of callHistory.slice(1)" class="history-call-box">
-      <div class="call-left">
-        <div class="call-code">{{ call.ticket }}</div>
-        <div class="call-name">{{ call.name }}</div>
-      </div>
-      <div class="call-right">
-        <div class="call-time">{{ call.time }}</div>
-        <div class="call-desk">{{ call.desk }}</div>
-      </div>
-    </div>
   </div>
+    </div>
+
+  </ng-container>
+
 
   <div class="call-active-layout" *ngIf="isCallActive">
+
     <app-call-display [callData]="currentCall"></app-call-display>
 
     <div class="floating-call-container">
@@ -62,22 +69,25 @@
         <i class="fas fa-expand" alt="Tela Cheia"></i>
       </div>
       <div class="calls-title">HISTÓRICO GERAL</div>
+
       <div class="calls-history-only">
-      <div *ngFor="let call of callHistory"
-        class="history-call-box"
-        [class.active]="isCallActive">
-          <div class="call-left">
-            <div class="call-code">{{ call.ticket }}</div>
-            <div class="call-name">{{ call.name }}</div>
+          <div *ngFor="let call of callHistory"
+              class="history-call-box"
+              [class.active]="isCallActive">
+              <div class="call-left">
+                  <div class="call-code">{{ call.ticket }}</div>
+                  <div class="call-name">{{ abbreviateName(call.name) }}</div>
+              </div>
+              <div class="call-right">
+                  <div class="call-time">{{ call.time }}</div>
+                  <div class="call-desk">{{ call.desk }}</div>
+              </div>
           </div>
-          <div class="call-right">
-            <div class="call-time">{{ call.time }}</div>
-            <div class="call-desk">{{ call.desk }}</div>
-          </div>
-        </div>
       </div>
+
       <div class="video-preview"></div>
     </div>
+
   </div>
 </main>
 

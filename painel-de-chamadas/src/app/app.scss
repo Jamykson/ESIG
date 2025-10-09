@@ -1,6 +1,6 @@
-/* =========================================================
-   ESTILOS GLOBAIS E LAYOUT PRINCIPAL
-   ========================================================= */
+/* ===================================================================
+   1. ESTILOS GLOBAIS E LAYOUT PRINCIPAL
+   =================================================================== */
 
 :host {
   display: block;
@@ -11,6 +11,7 @@
   box-sizing: border-box;
 }
 
+/* Layout principal em grid (visível no estado padrão) */
 main {
   display: grid;
   grid-template-columns: 65fr 35fr;
@@ -21,9 +22,10 @@ main {
   box-sizing: border-box;
 }
 
-/* =========================================================
-   CABEÇALHO SUPERIOR
-   ========================================================= */
+
+/* ===================================================================
+   2. CABEÇALHO SUPERIOR (HEADER)
+   =================================================================== */
 
 .app-header {
   display: flex;
@@ -51,65 +53,47 @@ main {
   height: 30px;
 }
 
-/* =========================================================
-   ESTADO NORMAL (QUANDO isCallActive é FALSO)
-   ========================================================= */
 
+/* ===================================================================
+   3. LAYOUTS DE ESTADO (NORMAL vs. CHAMADA ATIVA)
+   =================================================================== */
 
-/* Regra compartilhada para garantir o mesmo tamanho e sombra */
-.green-frame,
-.call-active-layout app-call-display {
+/* --- ESTADO 1: VISÃO PADRÃO (isCallActive = false) --- */
+
+/* Painel principal de vídeo (coluna da esquerda) */
+.green-frame {
+  background-color: #e5e7eb;
+  padding: 1rem;
   border-radius: 12px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   display: flex;
-  width: 100%; /* Ocupa 100% da coluna do grid, garantindo o mesmo tamanho */
+  width: 100%;
 }
 
 .video-container {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 12px; /* igual ao retângulo do segundo estado */
+  border-radius: 12px;
   overflow: hidden;
 }
 
-/* Background cinza inicial */
+/* Fundo do vídeo que transita de cor */
 .video-background {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #9ca3af; /* cinza inicial */
-  transition: background-color 0.3s ease, all 0.7s cubic-bezier(0.65, 0, 0.35, 1);
-  border-radius: 12px; 
-}
-
-/* Estado ativo: azul escuro igual ao app-call-display */
-.video-container.active .video-background {
-  background-color: #334155;
-}
-
-/* --- INÍCIO: NOVOS ESTILOS PARA VIDEO BACKGROUND --- */
-.video-container {
-  position: relative;
-}
-
-.video-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #e5e7eb; /* cinza no estado inicial */
+  background-color: #e5e7eb; /* Cor no estado inicial */
   transition: background-color 0.3s ease;
 }
 
 .video-container.active .video-background {
-  background-color: #334155; /* cor do segundo estado */
+  background-color: #334155; /* Cor quando a chamada está ativa */
 }
 
-/* Painel de chamadas da direita */
+/* Painel de chamadas (coluna da direita) */
 .calls-panel-wrapper {
   background-color: #fff;
   border-radius: 8px;
@@ -118,26 +102,26 @@ main {
   width: 430px;
   display: flex;
   flex-direction: column;
-  position: relative; /* Essencial para o posicionamento dos ícones */
-  overflow-y: auto; /* Adiciona rolagem ao painel inteiro se necessário */
+  position: relative;
+  overflow-y: auto;
 }
 
-/* =========================================================
-   ESTADO DE CHAMADA (QUANDO isCallActive é VERDADEIRO)
-   ========================================================= */
+
+/* --- ESTADO 2: VISÃO DE CHAMADA ATIVA (isCallActive = true) --- */
 
 /* Transforma o 'main' em um container flex de tela cheia */
 main.call-active {
   display: flex;
+  flex-direction: row; /* Garante o alinhamento lado a lado */
 }
 
-/* Oculta os elementos do estado normal */
+/* Oculta os painéis do estado padrão */
 main.call-active .green-frame,
 main.call-active .calls-panel-wrapper {
   display: none;
 }
 
-/* Container principal do estado de chamada */
+/* Layout que envolve os dois painéis da chamada ativa */
 .call-active-layout {
   display: flex;
   width: 100%;
@@ -145,21 +129,20 @@ main.call-active .calls-panel-wrapper {
   gap: 2rem;
 }
 
-/* Estilos específicos de cada painel */
-.green-frame {
-  background-color: #e5e7eb;
-  padding: 1rem;
-}
-
+/* Painel de display da chamada (ocupa o espaço principal) */
 .call-active-layout app-call-display {
   background-color: #334155;
   color: white;
   padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  width: 100%;
 }
 
-/* Container branco à direita */
+/* Container flutuante (painel da direita) */
 .floating-call-container {
-  width: 430px; /* largura fixa */
+  width: 430px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -168,18 +151,18 @@ main.call-active .calls-panel-wrapper {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   padding: 1.5rem;
   overflow: hidden;
-  position: relative; /* Essencial para os ícones */
+  position: relative;
 }
 
-/* A área que conterá a lista e terá a rolagem */
+/* Área de rolagem para o histórico de chamadas */
 .calls-history-only {
-  flex-grow: 1; /* Faz esta área crescer e ocupar todo o espaço vertical livre */
-  overflow-y: auto; /* Adiciona a rolagem vertical APENAS QUANDO necessário */
+  flex-grow: 1; /* Ocupa todo o espaço vertical livre */
+  overflow-y: auto; /* Adiciona rolagem vertical apenas quando necessário */
   min-height: 0; /* Truque para a rolagem funcionar em flexbox */
-  padding-right: 8px; /* Espaço para a barra de rolagem */
+  padding-right: 8px;
 }
 
-/* Preview do vídeo no estado de chamada */
+/* Preview do vídeo em miniatura */
 .video-preview {
   margin-top: 1rem;
   aspect-ratio: 16 / 9;
@@ -193,9 +176,12 @@ main.call-active .calls-panel-wrapper {
   background: black;
 }
 
-/* =========================================================
-   ESTILOS COMPARTILHADOS (TÍTULOS, CARDS, ÍCONES, etc.)
-   ========================================================= */
+
+/* ===================================================================
+   4. COMPONENTES COMPARTILHADOS (TÍTULOS, CARDS, ÍCONES)
+   =================================================================== */
+
+/* --- Tipografia --- */
 
 .calls-title {
   font-weight: 700;
@@ -213,7 +199,8 @@ main.call-active .calls-panel-wrapper {
   text-transform: uppercase;
 }
 
-/* Card da chamada atual (azul-petróleo) */
+/* --- Card: Chamada Atual --- */
+
 .current-call-box {
   display: flex;
   justify-content: space-between;
@@ -239,7 +226,8 @@ main.call-active .calls-panel-wrapper {
   font-weight: 700;
 }
 
-/* Cards cinzas do histórico */
+/* --- Card: Histórico de Chamadas --- */
+
 .history-call-box {
   display: flex;
   justify-content: space-between;
@@ -282,17 +270,19 @@ main.call-active .calls-panel-wrapper {
   top: 0;
   width: 3px;
   height: 100%;
-  background-color: #d1d5db;
+  background-color: #d1d5db; /* Cor padrão */
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
   box-shadow: inset -1px 0 1px rgba(0, 0, 0, 0.08);
 }
 
 .history-call-box.active::before {
-  background-color: #47d9c7; /* verde-água */
+  background-color: #47d9c7; /* Cor de destaque */
 }
 
-/* Ícones no canto superior direito */
+/* --- Ícones e Botões --- */
+
+/* Ícones no canto superior direito dos painéis */
 .action-icons {
   position: absolute;
   top: 1.5rem;
@@ -303,7 +293,7 @@ main.call-active .calls-panel-wrapper {
   font-size: 1.2rem;
 }
 
-/* Botão de simulação */
+/* Botão de simulação (para depuração) */
 .simulation-button {
   position: fixed;
   bottom: 20px;
@@ -313,40 +303,39 @@ main.call-active .calls-panel-wrapper {
   font-size: 16px;
 }
 
-/* =========================================================
-   ESTILOS PARA ANIMAÇÃO DO VÍDEO
-   ========================================================= */
 
-/* O container flutuante que carrega o vídeo */
+/* ===================================================================
+   5. ANIMAÇÃO DE TRANSIÇÃO DO VÍDEO
+   =================================================================== */
+
+/* --- Container da Animação --- */
+
+/* Wrapper flutuante que contém o vídeo e se move entre os estados */
 .video-animation-wrapper {
   position: fixed;
-  z-index: 100; /* Garante que fique na frente do fundo, mas atrás dos painéis de chamada */
+  z-index: 100; /* Abaixo dos painéis de chamada, acima do fundo */
   background-color: black;
   
-  /* A MÁGICA DA ANIMAÇÃO SUAVE */
+  /* A transição 'all' com cubic-bezier cria a animação suave de movimento e redimensionamento */
   transition: all 0.7s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-/* --- ESTADO 1: VÍDEO GRANDE (PADRÃO) --- */
-/* Posição e tamanho do vídeo na tela inicial, para ficar igual à sua imagem */
+/* --- Posições da Animação --- */
+
+/* Estado 1: Posição e tamanho grande (Visão Padrão) */
 .video-animation-wrapper {
-  /* Coordenadas para a posição grande DENTRO do .video-container-wrapper */
-  top: calc(50px + 2rem + 1rem + 1rem); /* header + padding-main + padding-frame + padding-wrapper */
-  left: calc(2.2rem + 1rem + 1rem); /* padding-main + padding-frame + padding-wrapper */
-  width: calc(62% - 4rem - 2rem - 2rem); /* 65% da tela - gaps e paddings */
-  height: calc((62vw - 8rem) * 9 / 16); /* Calcula altura 16:9 baseada na largura */
+  top: calc(50px + 2rem + 1rem + 1rem);
+  left: calc(2.2rem + 1rem + 1rem);
+  width: calc(62% - 4rem - 2rem - 2rem);
+  height: calc((62vw - 8rem) * 9 / 16); /* Mantém proporção 16:9 */
   border-radius: 6px;
 }
 
-
-/* --- ESTADO 2: VÍDEO PEQUENO (QUANDO TEM A CLASSE .reduced-view) --- */
-/* Posição e tamanho do vídeo na tela de chamada (miniatura) */
+/* Estado 2: Posição e tamanho pequeno (Visão de Chamada Ativa) */
 .video-animation-wrapper.reduced-view {
-  /* Coordenadas para a posição da miniatura */
-  width: calc(430px - 3rem); /* Largura do painel flutuante menos os paddings */
-  height: calc((430px - 3rem) * 9 / 16); /* Proporção 16:9 */
-  top: calc(100vh - ((430px - 3rem) * 9 / 16) - 1.5rem - 2rem); /* Alinha na base da tela */
-  left: calc(100vw - 430px - 2rem + 1.5rem - 28px); /* Alinha na coluna da direita */
+  width: calc(430px - 3rem); /* Largura do painel direito - paddings */
+  height: calc((430px - 3rem) * 9 / 16); /* Mantém proporção 16:9 */
+  top: calc(100vh - ((430px - 3rem) * 9 / 16) - 1.5rem - 2rem); /* Alinha na base */
+  left: calc(100vw - 430px - 2rem + 1.5rem - 28px); /* Alinha na direita */
   border-radius: 6px;
 }
-
