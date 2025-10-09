@@ -1,45 +1,34 @@
-Painel de Chamadas para Sala de Espera
-Este projeto é uma solução para o desafio técnico do processo seletivo de estágio Front-End, que consiste em desenvolver um painel digital (TV) para gerenciamento do fluxo de pacientes em uma sala de espera.
+# 🩺 Painel de Chamadas para Sala de Espera
 
-A aplicação foi construída utilizando Angular e implementa uma interface de página única (SPA) com dois estados visuais principais: um estado padrão para entretenimento (exibindo um vídeo do YouTube) e um estado de chamada para exibir informações de atendimento com destaque.
+Este projeto é uma solução para o **desafio técnico do processo seletivo de estágio Front-End**, que consiste em desenvolver um **painel digital (TV)** para gerenciamento do fluxo de pacientes em uma sala de espera.
 
-🚀 Tecnologias Utilizadas
-Angular: Framework principal para a construção da aplicação.
+A aplicação foi construída utilizando **Angular** e implementa uma **interface de página única (SPA)** com dois estados visuais principais:
+- **Estado padrão:** entretenimento (exibe um vídeo do YouTube)
+- **Estado de chamada:** exibe as informações de atendimento com destaque
 
-TypeScript: Superset do JavaScript que adiciona tipagem estática.
+---
 
-SCSS: Pré-processador CSS para estilos mais organizados e poderosos.
+## 🚀 Tecnologias Utilizadas
 
-YouTube IFrame Player API: Para incorporar e controlar o player de vídeo do YouTube.
+- **Angular** → Framework principal para a construção da aplicação  
+- **TypeScript** → Superset do JavaScript que adiciona tipagem estática  
+- **SCSS** → Pré-processador CSS para estilos mais organizados e poderosos  
+- **YouTube IFrame Player API** → Para incorporar e controlar o player de vídeo do YouTube  
 
-⚙️ Como Executar o Projeto
-Para rodar esta aplicação em um ambiente local, siga os passos abaixo.
+---
 
-Pré-requisitos
-Você precisa ter o Node.js (que inclui o npm) instalado em sua máquina.
+## ⚙️ Como Executar o Projeto
 
-Você precisa ter o Angular CLI instalado globalmente. Se não tiver, instale com o comando:
+### 📋 Pré-requisitos
 
+Antes de começar, você precisa ter instalado:
+
+- [Node.js](https://nodejs.org/) (que inclui o **npm**)
+- [Angular CLI](https://angular.io/cli) instalado globalmente  
+  Caso ainda não tenha, instale com o comando:
+
+```bash
 npm install -g @angular/cli
-
-Passos para a Instalação e Execução
-Clone o repositório para a sua máquina local.
-
-Acesse a pasta do projeto pelo terminal:
-
-cd painel-de-chamadas/
-
-Instale as dependências do projeto:
-
-npm install
-
-Inicie o servidor de desenvolvimento do Angular:
-
-ng serve --open
-
-O comando ng serve irá compilar a aplicação e iniciar um servidor local. A flag --open (ou -o) abrirá automaticamente o seu navegador padrão no endereço http://localhost:4200/.
-
-A aplicação estará rodando e pronta para ser testada!
 
 ✨ Funcionalidades Implementadas
 O projeto implementa os seguintes requisitos do desafio:
