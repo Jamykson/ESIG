@@ -29,7 +29,7 @@ Antes de começar, você precisa ter instalado:
 
 ```bash
 npm install -g @angular/cli
-
+```
 ✨ Funcionalidades Implementadas
 O projeto implementa os seguintes requisitos do desafio:
 
